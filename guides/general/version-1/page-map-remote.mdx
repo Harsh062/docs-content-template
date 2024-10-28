@@ -1,0 +1,62 @@
+---
+title: Map Remote
+label: Map Remote
+visibility: PUBLIC
+slug: map-remote
+---
+
+The Map Remote feature lets you change the request's location to a new destination location such that the response is transparently served from the new location as if it was the original request.
+
+### How to use
+
+You can use Redirect/Replace rule to set up mappings.
+
+* [Redirect rule](https://developers.requestly.com/http-rules/map-local-url-redirect/) allows you to redirect network requests from one URL to another.
+
+- [Replace rule](https://developers.requestly.com/http-rules/replace-strings/) allows you to replace a part of the URL with another string.
+
+You can check out the demo here:
+
+<Image src="https://i.ytimg.com/vi/lOt1kGKTq-w/hqdefault.jpg" align="center" />
+
+### Matching Requests
+
+All the Requestly rules can match requests based on the URL, host, path, and [rule operators](https://docs.requestly.io/browser-extension/chrome/features/rule-operators). With the help of these operators, you can define rules to match using the wildcard, regex, or string matching types. You can also perform [advanced targeting](https://developers.requestly.com/http-rules/advance-targeting/) on the requests.
+
+You can perform regex pattern matching in replace rule to extract information from the URL:
+
+For example: Extract domain, pathName and extension for URLs ending with `.jpg`
+
+```bash
+/(https:\/\/[^\/]*)(.+)(\.jpg)$/i
+```
+
+* $1 is the value of 1st group expression. – DomainName
+
+- $2 is the value of the 2nd group expression – PathName but not the file extension
+
+* $3 is the value of the 3rd group expression – File extension `.jpg` in this case
+
+### Similar Examples
+
+#### Map local resources on the production site
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-ce273c6e-2b53-494c-aace-eaa15de07bee-ss-2_61png/public" align="left" />
+
+You can find the above redirect rule [here](https://app.requestly.io/rules/#sharedList/1675507924144-map-local-to-production).
+
+#### Switch domain to staging environment using replace rule
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-62f8866b-f88b-4dea-b545-42412aa25881-ss-2_62png/public" align="left" />
+
+You can find the above replace the rule [here](https://app.requestly.io/rules/#sharedList/1675508715615-switch-domain-to-staging).
+
+### Popular Use Cases
+
+* Use development/staging endpoints on your production sites without changing the code so that you can directly test your local code on production sites without deployment.
+
+- You can switch your domain to a local environment for testing new changes that are yet to be deployed.
+
+* You can map HTTP requests to an HTTPS destination and vice versa.
+
+- You can test the backward compatibility of a new API by mapping all requests to the more recent version of the API.

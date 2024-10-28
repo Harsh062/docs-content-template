@@ -1,0 +1,26 @@
+---
+title: Groups
+label: Groups
+visibility: PUBLIC
+slug: groups
+---
+
+The Group schema defines the structure of a group object in the API. The table below summarizes the key attributes of a Group:
+
+| **Property**  | **Usage**                              | **Required** | **Type** | **Description**                    |
+| ------------- | -------------------------------------- | ------------ | -------- | ---------------------------------- |
+| `id`          | Auto-generated, Read-Only              | No           | String   | Unique identifier for the group.   |
+| `name`        | User defined, Required, Can be updated | Yes          | String   | Name of the group.                 |
+| `status`      | Can be updated, `Active` or `Inactive` | No           | String   | Status of the group.               |
+| `isFavourite` | User defined. `false` by default       | No           | Boolean  | Indicates if the group is a pinned |
+
+There are other attributes that are all read only and are automatically handled by the backend. These are not important to understand when you are just working with the API but you will still see them in the response from the API.
+
+| Property           | Type   | Description                                                                                                                                    |
+| ------------------ | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `createdBy`        | String | id of user who created the group                                                                                                               |
+| `creationDate`     | Number | Timestamp of when the group was created                                                                                                        |
+| `lastModifiedBy`   | String | The id of the user who last modified the group. This might be different from the value in `createdBy` in case the group is part of a workspace |
+| `modificationDate` | Number | Timestamp of last modification                                                                                                                 |
+| `currentOwner`     | String | **Deprecated:** Who owns the rule currently                                                                                                    |
+| `objectType`       | String | Value: `group`                                                                                                                                 |

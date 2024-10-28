@@ -1,0 +1,56 @@
+---
+title: Modify Headers
+label: Modify Headers
+visibility: PUBLIC
+slug: modify-headers
+---
+
+HTTP(s) Headers are key-value pairs that are used to pass additional information with an HTTP(s) request or response. Developers often desire the ability to easily modify the headers of traffic that pass through their browsers.
+
+Requestly provides a simple solution to accomplish this, allowing developers to add new headers, remove existing headers and override existing header values in a few clicks.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-7aa48737-23d7-4734-8391-214149f25be4-ss-2_50png/public" align="left" />
+
+1. **Source Condition**: Source condition is where you set criteria for the rules. You can use `URL`, `Host`, or `Path` with `Regex`, `Contains`, `Wildcard`, or `Equals` to match the source request. Learn more about [Source Conditions here](https://docs.requestly.io/guides/source-condition).
+
+2) **Request Headers** : Select this tab to modify the Request Headers of the Request.
+
+3. **Response Headers** : Select this tab to modify the Response Headers of the Request.
+
+4) **Header Modification** : This is where the header modification will happen. You can `Add`, `Remove`, or `Override` the headers.
+
+5. **Source Filters** : You can define better targeting conditions and restrict rules to be applied on specific web pages (or domains), request types, request methods, or request payloads. Learn more about source filters [here](https://docs.requestly.io/desktop-app/mac/features/advance-targeting).
+
+#### Popular use cases
+
+* **Open websites in an iframe for testing:** Response headers like X-Frame-Options and Content-Security-Policy don’t allow you to open pages in iframes to prevent clickjacking. Using Requestly, you can modify this header to allow the websites to be opened in an iframe.
+
+- **Remove Content-Security-Policy:** Content-Security-Policy response header is added to the website to prevent injection of external scripts. Requestly can be used to remove the CSP response header for testing purposes.
+
+* **Debugging CORS Issues:** To debug CORS errors in the browser, you can modify response headers like `Access-Control-Allow-Origin`, `Access-Control-Allow-Methods`, `Access-Control-Allow-Headers` and `Access-Control-Allow-Credentials`.
+
+- **Access the Kubernetes dashboard:** You can access the Kubernetes dashboard by modifying the Authorization header. In order to do that, you need to pass Authorization: Bearer `<token>` in every request to Dashboard. You can find more information [here](https://github.com/kubernetes/dashboard/blob/790bc1ec5e22642f64e86903f626005a26573cbc/docs/user/access-control/README.md).
+
+> **Modify Headers in Safari:** Download the Requestly [desktop app](https://requestly.io/desktop) to modify headers in safari and other apps.
+
+<Image src="https://i.ytimg.com/vi/CLEHS6NFYZY/hqdefault.jpg" align="left" />
+
+### FAQs
+
+<Accordion title="Response headers not showing inside browser network panel">
+  Due to technical constraints, request headers modified using Requestly won't show up in the browser network panel.
+
+  **But the headers actually received by the server are modified.**
+
+  You can see the modified headers sent to the server in the Desktop App `Network Traffic` Section
+
+   You can check whether the rule is returning correct response header or not using this code in console
+
+  ```javascript
+  fetch("<url>")
+  	fetch("<url>")
+  	.then(data => {
+  		console.log(data.headers.get("<header-name>"))}
+  	)
+  ```
+</Accordion>

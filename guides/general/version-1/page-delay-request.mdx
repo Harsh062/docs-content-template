@@ -1,0 +1,38 @@
+---
+title: Delay Request
+label: Delay Request
+visibility: PUBLIC
+slug: delay-request
+---
+
+As a frontend developer or QA, Testing certain parts of web applications require you to simulate delay in one or more components of the web app. This can be achieved using Requestly Delay Rule.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-82d44a4f-1d0b-4f4e-8e1e-b607dc89bcd3-ss-2_57png/public" align="left" />
+
+1. **Source Condition:** Source condition is where you set criteria for the rules. You can use `URL`, `Host` or `Path` with `Regex`, `Contains`, `Wildcard` or `Equals` to match the source request. Learn more about source conditions [here](https://docs.requestly.io/guides/source-condition).
+
+2) **Delay Amount** : The delay time (in milliseconds) that is applied to the request matching the source condition. For XHR/Fetch, max delay is 5000 ms & for other resources (JS, CSS, Images, etc), max delay is 10000 ms. For [Desktop app](https://requestly.io/desktop) we don't have such limitation for the delay amount.
+
+3. **Source Filters** : You can define better targeting conditions and restrict rules to be applied on specific webpages (or domains), request types, request methods, or request payload. Learn more about source filters [here](https://docs.requestly.io/desktop-app/mac/features/advance-targeting).
+
+#### Popular Use Cases
+
+* Test the performance of your web app on a slower network conditions.
+
+- Test the behaviour of your app when one or more APIs respond slowly (API Latency has gone up).
+
+* Check if any race conditions exist when some resource X gets loaded after or before another resource Y.
+
+- Test the impact of the slow loading of external resources impact on your app.
+
+* Test loading experience in the app.
+
+#### Further Readings
+
+* You can refer [this blog](https://requestly.io/blog/adding-delay-to-network-requests) on delaying network requests for detailed explanation.
+
+#### FAQs
+
+<Accordion title="Why is maximum delay capped at 10000ms?">
+  To avoid performance degradation, we cap the maximum delay to 10000ms
+</Accordion>

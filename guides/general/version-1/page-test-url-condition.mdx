@@ -1,0 +1,60 @@
+---
+title: Test URL Condition
+label: Test URL Condition
+visibility: PUBLIC
+slug: test-url-condition
+---
+
+Test URL condition feature helps you validate whether the rule source url condition you have setup works for the request URL you want it work with. This helps improving your rule creation and editing experience more fluent especially when using `regex` or `wildcard` operators.
+
+To test a URL condition:
+
+1. Open any rule editor
+
+2) Enter the source url condition which suits your case
+
+3. Click on the **flask icon, **this opens a test URL popup modal
+
+<Image src="https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fe194a534-82ba-4d68-b7a4-e4d2ba470998%2Ftest_url_condition_walkthrough.gif?table=block&id=20957948-1348-4a8d-96e0-aa34b9db76bc&cache=v2" align="left" />
+
+This popup modal has these following components:
+
+1. **Source condition**: This is the source condition which was earlier defined in the rule editor. This is editable, you can change the source condition to satisfy the rule condition if required.
+
+2) **URL field: **Enter the complete URL on which you want the rule to be applied
+
+3. **Result**: Here the test results show up indicating if the rule will be applied on the URL entered in the **URL field **or not**.**
+
+### Testing URL with Regex Condition
+
+To test a URL with a regex pattern in source url condition, In the URL field, enter the complete URL on which you want to apply the rule. The result will show whether the rule will be applied on the URL or not based on the regex pattern.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-0059b721-f6a3-4ad8-be45-1f2cfc01d7bf-ss-2_8png/public" align="left" />
+
+Examples:
+
+> **Source condition**: `/^https://.*github.*/ `**URL entered**: [`https://subdomain.github.io/`](https://subdomain.github.io/)` `**Result: ✅ **The URL matches the source condition defined
+
+> **Source condition**: `/^`[`https://blog\..*\.com$/`](https://blog\\..*\\.com$/)** URL entered**: [`https://blog.example.com/`](https://blog.example.com/)` `**Result: ✅ **The URL matches the source condition defined
+
+> **Source condition**: `/^((?!example).)*$/`** URL entered**: [`https://www.examplewebsite.com/`](https://www.examplewebsite.com/)` `**Result: ❌ **The URL does not matches the source condition defined
+
+ 
+
+💡
+
+**NOTE** Make sure that the regex pattern in source condition is valid and enclosed with slashes(/). Example: `/^https://.*github.*` ❌ Invalid regex `/^https://.*github.*/` ✅ Valid regex `/(.+)://(.+).`[`example.com/ig`](http://example.com/ig) ✅ Valid regex
+
+### Testing URL with Wildcard Condition
+
+To test a URL with a wildcard pattern in source url condition, In the URL field, enter the complete URL on which you want to apply the rule. The result will show whether the rule will be applied on the URL or not based on the wildcard pattern.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-e27aec7d-eba5-4037-a71c-c35538f37d6b-ss-2_9png/public" align="left" />
+
+Examples:
+
+> **Source condition**: `*://*.`[`yahoo.com`](http://yahoo.com) **URL entered**: [`http://cricket.yahoo.com`](http://cricket.yahoo.com) **Result**: ✅ The URL matches the source condition defined
+
+> **Source condition**: `*google*.com?param=*` **URL entered**: [`https://www.google.com/page?param=value`](https://www.google.com/page?param=value) **Result**: ✅ The URL matches the source condition defined
+
+> **Source condition**: `*example*.com?param=*` **URL entered**: [`https://www.examplewebsite.com/page?param=test`](https://www.examplewebsite.com/page?param=test) **Result**: ❌ The URL does not matches the source condition defined

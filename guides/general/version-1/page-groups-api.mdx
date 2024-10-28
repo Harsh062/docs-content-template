@@ -1,0 +1,213 @@
+---
+title: Groups API
+label: Groups API
+visibility: PUBLIC
+slug: groups-api
+---
+
+To authenticate with the API, use the custom header `x-api-key` with your provided API key.
+
+Example:
+
+```bash
+curl -H "x-api-key: YOUR_API_KEY" https://api2.requestly.io/v1/rules
+```
+
+<Callout type="tip">
+  Requestly API is currently in `BETA`. Fill this [form](https://app.formbricks.com/s/clryn62s316gjdeho9j03t7oa) to get your API key today.
+</Callout>
+
+## Endpoints
+
+The current APIs give all the basic crud capabilities for rules and groups. In case you want to quickly try these out on this playground [https://requestly.readme.io/](https://requestly.readme.io/)
+
+### **Retrieve Groups**
+
+#### **Get All Groups**
+
+**Endpoint**: `GET /groups`
+
+**CURL Example**:
+
+```bash
+curl -H "x-api-key: YOUR_API_KEY" https://api2.requestly.io/v1/groups
+```
+
+**Sample Response**:
+
+```json
+{
+  "success": true,
+  "data": [
+        {
+            "createdBy": "Gw9geGxr4aWejyB1erPKMnyFNNZW",
+            "creationDate": 1707893324459,
+            "currentOwner": "Gw9geGxr4aWejyB1erPKMnyFNNZW",
+            "description": "",
+            "groupId": "",
+            "id": "Cancel_jcgzx",
+            "isSample": false,
+            "lastModifiedBy": "Gw9geGxr4aWejyB1erPKMnyFNNZW",
+            "modificationDate": 1707893326371,
+            "name": "cancel-1707893324464",
+            "objectType": "rule",
+            "pairs": [
+                {
+                    "id": "vr1e2",
+                    "source": {
+                        "key": "Url",
+                        "operator": "Contains",
+                        "value": "sdfa"
+                    }
+                }
+            ],
+            "ruleType": "Cancel",
+            "status": "Active"
+        },
+				// other groups
+    ],
+  "total": 12,
+  "nextOffset": null,
+}
+```
+
+This endpoint supports pagination. If the `nextOffset` in the response is `null` there are no more records to fetch.
+
+You can specify which page of results to fetch by using the following query parameters in your request:
+
+* `offset` : The index from where the results should start. Usually you will set this to the value you receive inside the `nextOffset`
+
+* `pageSize` : Number of results you want to GET. By default this is set to `30` and can take a maximum value of `75` right now.
+
+#### **Get a Specific Group**
+
+**Endpoint**: `GET /groups/:id`
+
+**CURL Example**:
+
+```bash
+curl -H "x-api-key: YOUR_API_KEY" https://api2.requestly.io/v1/groups/Group_1a2b3c
+```
+
+**Sample Response**:
+
+```json
+{
+  "success": true,
+  "data": {
+        "id": "Group_4bfu8",
+        "creationDate": 1707893421467,
+        "modificationDate": 1707894488025,
+        "createdBy": "Gw9geGxr4aWejyB1erPKMnyFNNZW",
+        "lastModifiedBy": "Gw9geGxr4aWejyB1erPKMnyFNNZW",
+        "name": "now this is active",
+        "objectType": "group",
+        "status": "Active",
+        "isFavourite": false
+    }
+}
+```
+
+### **Create a Group**
+
+**Endpoint**: `POST /groups`
+
+**CURL Example**:
+
+```bash
+curl -X POST -H "x-api-key: YOUR_API_KEY" -H "Content-Type: application/json" -d '{
+  "name": "New Awesome Group",
+  "status": "Active"
+}' https://api2.requestly.io/v1/groups
+```
+
+**Sample Response**:
+
+```json
+{
+  "success": true,
+  "data": {
+        "id": "Group_08j61",
+        "creationDate": 1707894094078,
+        "modificationDate": 1707894094078,
+        "createdBy": "Gw9geGxr4aWejyB1erPKMnyFNNZW",
+        "lastModifiedBy": "Gw9geGxr4aWejyB1erPKMnyFNNZW",
+        "name": "New Awesome Group",
+        "objectType": "group",
+        "status": "Active",
+        "isFavourite": false,
+        "currentOwnerId": "Gw9geGxr4aWejyB1erPKMnyFNNZW"
+    }}
+```
+
+### **Update a Group**
+
+**Endpoint**: `PUT /groups/:id`
+
+**CURL Example**:
+
+```bash
+curl -X PUT -H "x-api-key: YOUR_API_KEY" -H "Content-Type: application/json" -d '{
+  "name": "Updated Group Name",
+  "status": "Inactive"
+}' https://api2.requestly.io/v1/groups/Group_1a2b3c
+```
+
+**Sample Response**:
+
+```json
+{
+  "success": true,
+  "data": {
+        "id": "Group_1a2b3c",
+        "creationDate": 1707893421467,
+        "modificationDate": 1707894488025,
+        "createdBy": "Gw9geGxr4aWejyB1erPKMnyFNNZW",
+        "lastModifiedBy": "Gw9geGxr4aWejyB1erPKMnyFNNZW",
+        "name": "Updated Group Name",
+        "objectType": "group",
+        "status": "Inactive",
+        "isFavourite": false
+    }
+}
+```
+
+### **Delete a Group**
+
+**Endpoint**: `DELETE /groups/:id`
+
+**CURL Example**:
+
+```bash
+curl -X DELETE -H "x-api-key: YOUR_API_KEY" https://api2.requestly.io/v1/groups/Group_1a2b3c
+```
+
+**Sample Response**:
+
+```json
+{
+  "success": true,
+  "message": "Group successfully deleted."
+}
+```
+
+## **Possible Errors**
+
+* **Group not found**: The specified group does not exist.
+
+- **Unauthorized action**: You do not have access to the specified group.
+
+* **Invalid Group Id**: The provided group ID is invalid.
+
+- **Invalid Group Payload**: The entire group payload is invalid.
+
+* **Group Name Required**: A group name is required.
+
+Each error returns a response in the format:
+
+```json
+{
+  "success": false,
+  "message": "Error message here."
+}
+```

@@ -1,0 +1,72 @@
+---
+title: Mock Collection
+label: Mock Collection
+visibility: PUBLIC
+slug: mock-collection
+---
+
+Mock collections provide a structured way to manage your mocks. Each collection can optionally include a static “path” that is automatically prepended to the mock endpoints within that collection. This feature is particularly useful for versioning your mocks, ensuring consistency and clarity across different versions of your API.
+
+### Key benefits
+
+1. **Efficient Organization**:
+
+   * Group related mocks together, making it easier to manage and locate them.
+
+2) **Better Versioning**:
+
+   * Utilize the static "path" feature to prepend a version identifier or other relevant prefixes to your mock endpoints.
+
+   * Simplify the process of updating and managing multiple versions of your API.
+
+### Example
+
+Consider a collection for API version 1.0:
+
+* Collection path: `/api/v1`
+
+- Mock Endpoints:
+
+  * `/users`
+
+  * `/products`
+
+With the collection path, the actual mock endpoints become:
+
+* `/api/v1/users`
+
+- `/api/v1/products`
+
+This approach ensures that all endpoints within the collection are easily versioned, improving maintainability and clarity.
+
+### Create a new collection
+
+1. Go to [Mocks Dashboard](https://app.requestly.io/mock-server/apis)
+
+2) Click on **New Collection**.
+
+   <Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-8d23ae41-494d-44c0-b26f-4154fe58c9d0-ss-2_37png/public" align="left" />
+
+3. Enter the details of the Mock Collection and then click on **Save**.
+
+   <Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-886722ed-804e-4981-886e-74245711db65-ss-2_38png/public" align="left" />
+
+   1. Name: Give a collection a name.
+
+   2. Collection Path: A path which gets prepended to all the mocks inside this collection.
+
+      1. So if the collection path is “/api/v1”, then all the child mocks endpoint will start with this collection path.
+
+   3. Description: Give collection a description.
+
+### Move mock into collection
+
+Once the collection is created you can move the mocks into it.
+
+1. Click on the options button in right and click **Move.**
+
+   <Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-0f2454b5-c232-4ea2-8486-9b6e16f55ddc-ss-2_39png/public" align="left" />
+
+2. Select the appropriate collection and click **Move.**
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-95a50288-3306-4592-bcfc-96f0f43bac53-ss-2_40png/public" align="left" />

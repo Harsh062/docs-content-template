@@ -1,0 +1,64 @@
+---
+title: Advance Targeting
+label: Advance Targeting
+visibility: PUBLIC
+slug: advance-targeting
+---
+
+The advanced request targeting feature helps you define better targeting conditions and restrict rules to be applied on specific web pages (or domains), request types, request methods, or request payloads. It provides more control over how you can use the rules
+
+To apply advanced targeting:
+
+1. Go to [Requestly Dashboard](https://app.requestly.io/rules/my-rules).
+
+2) Create any new rule.
+
+3. On the rule editor, click the funnel icon to open *Source Filter*.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-s3-us-west-2amazonawscom-securenotion-staticcom-0c96d5b8-d32e-48d7-8741-d79efa1dd055-advanced_targetinggif/public" align="left" />
+
+The Source filter has 3 ways of advanced targeting methods to modify network requests:
+
+* Page URL
+
+- Resource Type
+
+* Resource Method
+
+First you can select page URL on which you want to add source filter. There are 4 ways to add your page URL of the site on which you want to apply this filter.
+
+It let's you apply your rule to a particular website instead of all the websites you open in your browser. In the select drop-down you will see 4 options. below is described how you can use them.
+
+### Page URL Targeting
+
+Page URL based targeting allows developers to restrict requestly rules to be applied when the request URL originates from within the targeted page URL (or domain) only. There are 4 ways to add your page URL of the site on that you want to apply this filter: `Equals`, `Contains`, `Matches (Regex)`, and `Matches (Wildcard)`.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-s3-us-west-2amazonawscom-securenotion-staticcom-119beccb-8bc2-42c0-8c83-bb8bfeba86fe-untitledwebp/public" align="left" />
+
+### Resource Type Targeting
+
+Here, you can select the type of the file on which you want to apply your rule. By default, all types of files will be selected.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-19762db7-ef01-4e0c-a435-c841dfd8a17a-ss-2_1png/public" align="left" />
+
+> Example 1 If you want to block all the images that appear on a particular website, you can do so by selecting Resource type as Image.
+
+> Example 2 You want to block all the CSS file that load on a particular website than you can select CSS in Resource Type to do so. It will block all CSS file on that website.
+
+### Request Method
+
+Here, you can modify a particular type on network request going from your desired website. By default it will apply on all types of network requests.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-a159a0c8-3640-47c0-a10f-10afd98ac1a3-ss-2png/public" align="left" />
+
+> EXAMPLE If you want to block a particular GET Request going from the desired site you can do it from here.
+
+### Request Payload Targeting
+
+Currently, Request Payload is available only for Response modification rules. It allows you to target a request based on the data that is sent along with it.
+
+In case of a GET request, the data would be matched from the search parameters (a.k.a. query string). In a POST request, the request body will be used for targeting (currently supports only JSON data).
+
+You can use JSON-like syntax for targeting as shown below:
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-s3-us-west-2amazonawscom-securenotion-staticcom-8d384a4e-5e46-4200-9a8a-dc17c5bcf8fc-untitledwebp/public" align="left" />

@@ -1,0 +1,205 @@
+---
+title: Rules
+label: Rules
+visibility: PUBLIC
+slug: rules
+---
+
+In order to work with the rules API you first need to understand the structure of the rules data.
+
+## Rule schema
+
+The following are the most important attributes inside a rule object.
+
+| Property                                                                                              | Usage                                                                                                | Required | Type           | Description                                                                                                                                                                  |
+| ----------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | -------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`                                                                                                  | Auto generated Read-Only                                                                             | No       | String         | Unique ID for your rule. This starts with the rule type followed by a 5 character long unique string. For example id of a redirect rule could be `Redirect_fohh4`            |
+| `name`                                                                                                | User defined Required Can be updated                                                                 | Yes      | String         | Name of the Rule                                                                                                                                                             |
+| `description`                                                                                         | User defined Optional Can be updated                                                                 | No       | String         | Description of the Rule                                                                                                                                                      |
+| `status`                                                                                              | Can be updated `Inactive` by default                                                                 | No       | String         | Can be either `Inactive` or `Active`                                                                                                                                         |
+| `groupId`                                                                                             | An empty groupId denotes an ungrouped rule. So this is required if you want to keep the rule grouped | No       | String         | Defines the group the rule is a part of. Groups are separate objects that are not currently editable by the API. But you can update this property to another existing group. |
+| `ruleType`                                                                                            | Required Can not be changed after creation.                                                          | Yes      | String         | Takes one of the following values: `Redirect` `Cancel` `Replace` `Headers` `UserAgent` `Script` `QueryParam` `Response` `Request` `Delay`                                    |
+| [`pairs`](https://developers.requestly.com/api/objects/rules/#block-272e22cbeb5c482daa8317ec3b401a2f) | Required Should always match the schema based on the rule type                                       | Yes      | Array of Pairs | Array of pairs that are part of the rule. [Read more about pairs below](https://developers.requestly.com/api/objects/rules/#block-272e22cbeb5c482daa8317ec3b401a2f)          |
+
+## Rule pairs
+
+Every rule has an array of rule pairs that contain:
+
+1. The matching condition inside the `source` property
+
+2) The rest of the details for the rules
+
+The details and their schema vary based on the type of the rule,
+
+But the schema of the source property is consistent throughout all the rules.
+
+### Source Schema
+
+This is common for all Rule types. You can get a better understanding about what each operator does by going through [the user docs](https://developers.requestly.com/http-rules/rule-operators/)
+
+| **Property**                                                                                            | **Usage** | **Type**                | **Description**                                                                                                    |
+| ------------------------------------------------------------------------------------------------------- | --------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `key`                                                                                                   | Required  | String                  | The key for the source. Can be one of the following values: `Url`, `host`, `path`                                  |
+| `operator`                                                                                              | Required  | String                  | The operator for matching. Can be one of the following values: `Equals`, `Contains`, `Matches`, `Wildcard_Matches` |
+| `value`                                                                                                 | Required  | String                  | The value to match against                                                                                         |
+| [`filters`](https://developers.requestly.com/api/objects/rules/#block-dfd7526a702842ef93456aa165c711b8) | Optional  | Array of Filter objects | Filters are used for more accurate targeting of the requests                                                       |
+
+#### Filters
+
+To learn more about the filters, read the user [documentation on advanced rule targetting](https://developers.requestly.com/http-rules/advance-targeting/). Filters have the following schema:
+
+| Property        | Usage    | Type            | Description                                                                                                                           |
+| --------------- | -------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `requestMethod` | Optional | Array of String | An array of HTTP method strings like `GET`, `POST`, etc.                                                                              |
+| `resourceType`  | Optional | Array of String | The type of resource being requested. Possible values listed below.                                                                   |
+| `URL`           | Optional | Object          | Host Page URL. This is similar to the source object, except it only requires the `operator` and `value` properties, both are required |
+
+The possible values for `resourceType` in the filters object are
+
+1. `xmlhttprequest` - To target only XHR requests
+
+2) `script` - Requests for javascript files
+
+3. `stylesheet` - Request for css files
+
+4) `image` - Request for images. These include files like png, jpeg, etc.
+
+5. `media` - Request for any media files, like video, audio, gifs, etc.
+
+6) `font` - Request for any font files like .ttf, .otf, etc
+
+7. `websocket` - All websocket requests. Not the Web socket upgrade request, but the requests made with the `ws` or `wss` protocol
+
+8) `main_frame` - Request made from the top level document
+
+9. `sub_frame` - Requests made from an iframe inside the top level document
+
+### Redirect Rule Pair
+
+Refer the user docs for a better understanding about Redirect Rule. In case of this rule `ruleType` property of the rule is set to `Redirect`
+
+The schema of the pairs is as follows:
+
+| **Property**                                                                                           | **Usage** | **Type** | **Description**                                                                                        |
+| ------------------------------------------------------------------------------------------------------ | --------- | -------- | ------------------------------------------------------------------------------------------------------ |
+| [`source`](https://developers.requestly.com/api/objects/rules/#block-d2ef6232185f4cceac90a931bc760b9a) | Required  | Object   | The source object for matching                                                                         |
+| `destinationType`                                                                                      | Required  | String   | The type of destination. Can be one of the following values: `url`, `map_local`, `mock_or_file_picker` |
+| `destination`                                                                                          | Required  | String   | The destination url value                                                                              |
+
+### Cancel Rule
+
+Refer [the user docs](https://developers.requestly.com/http-rules/cancel-rule/) for a better understanding about Cancel Rule. In case of this rule `ruleType` property of the rule is set to `Cancel`
+
+The schema of its pairs only requires the source object
+
+| **Property**                                                                                           | **Usage** | **Type** | **Description**                |
+| ------------------------------------------------------------------------------------------------------ | --------- | -------- | ------------------------------ |
+| [`source`](https://developers.requestly.com/api/objects/rules/#block-d2ef6232185f4cceac90a931bc760b9a) | Required  | Object   | The source object for matching |
+
+### Replace Rule
+
+Refer the user docs for a better understanding about Replace Rule. In case of this rule `ruleType` property of the rule is set to `Replace`
+
+The schema of the pairs is as follows:
+
+| **Property**                                                                                           | **Usage** | **Type** | **Description**                     |
+| ------------------------------------------------------------------------------------------------------ | --------- | -------- | ----------------------------------- |
+| [`source`](https://developers.requestly.com/api/objects/rules/#block-d2ef6232185f4cceac90a931bc760b9a) | Required  | Object   | The source object for matching      |
+| `from`                                                                                                 | Required  | String   | Target string that will be replaced |
+| `to`                                                                                                   | Required  | String   | The final replaced value            |
+
+### Headers Rule
+
+Refer [the user docs](https://developers.requestly.com/http-rules/modify-headers/) for a better understanding about Header Rule. In case of this rule `ruleType` property of the rule is set to `Header`
+
+The schema of the pairs is as follows:
+
+| **Property**                                                                                           | **Usage** | **Type**                                                                                                                              | **Description**                                         |
+| ------------------------------------------------------------------------------------------------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| [`source`](https://developers.requestly.com/api/objects/rules/#block-d2ef6232185f4cceac90a931bc760b9a) | Required  | Object                                                                                                                                | The source object for matching                          |
+| `modifications`                                                                                        | Required  | Array of Request/Response [Modifications](https://developers.requestly.com/api/objects/rules/#block-9683b6606f0a422faf0559a52cf0b15a) | Defines modifications for both `Request` and `Response` |
+
+#### Header rule modification object
+
+Each modification is an object that has the following structure
+
+| Property   | Usage    | Type                   | Description                                         |
+| ---------- | -------- | ---------------------- | --------------------------------------------------- |
+| `Request`  | Optional | Array of modifications | Modifications to be applied on the request headers  |
+| `Response` | Optional | Array of modifications | Modifications to be applied on the response headers |
+
+The modifications Object for both request and response are as follows
+
+| **Property** | **Usage**                               | **Type** | **Description**                                                                         |
+| ------------ | --------------------------------------- | -------- | --------------------------------------------------------------------------------------- |
+| `header`     | Required                                | String   | The name of the header to modify                                                        |
+| `type`       | Required                                | String   | The type of modification. Can be one of the following values: `Add`, `Remove`, `Modify` |
+| `value`      | Required (for `Add` and `Modify` types) | String   | The value to set for the header                                                         |
+
+### User-Agent Rule
+
+Refer the user docs for a better understanding about User-Agent Rule. In case of this rule `ruleType` property of the rule is set to `UserAgent`
+
+The schema of the pairs is as follows:
+
+| **Property**                                                                                           | **Usage** | **Type** | **Description**                |
+| ------------------------------------------------------------------------------------------------------ | --------- | -------- | ------------------------------ |
+| [`source`](https://developers.requestly.com/api/objects/rules/#block-d2ef6232185f4cceac90a931bc760b9a) | Required  | Object   | The source object for matching |
+| `userAgent`                                                                                            | Required  | String   | The user agent value to set    |
+
+### Query Param Rule
+
+Refer the user docs for a better understanding about Query Param Rule. In case of this rule `ruleType` property of the rule is set to `QueryParam`
+
+The schema of the pairs is as follows:
+
+| **Property**                                                                                           | **Usage** | **Type**                      | **Description**                             |
+| ------------------------------------------------------------------------------------------------------ | --------- | ----------------------------- | ------------------------------------------- |
+| [`source`](https://developers.requestly.com/api/objects/rules/#block-d2ef6232185f4cceac90a931bc760b9a) | Required  | Object                        | The source object for matching              |
+| `modifications`                                                                                        | Required  | Array of modification objects | The array of query parameter modifications. |
+
+#### Modification object for query param rule
+
+The modification objects for this rule are as follows
+
+| **Property** | **Usage**                               | **Type** | **Description**                                                                             |
+| ------------ | --------------------------------------- | -------- | ------------------------------------------------------------------------------------------- |
+| `param`      | Required                                | String   | The name of the query parameter to modify                                                   |
+| `type`       | Required                                | String   | The type of modification. Can be one of the following values: `Add`, `Remove`, `Remove All` |
+| `value`      | Required (for `Add` and `Modify` types) | String   | The value to set for the query parameter                                                    |
+
+### Modify Response Rule
+
+In case of this rule `ruleType` property of the rule is set to `Response`
+
+The schema of the pairs is as follows:
+
+| **Property**          | **Usage** | **Type** | **Description**                                                                                             |
+| --------------------- | --------- | -------- | ----------------------------------------------------------------------------------------------------------- |
+| `type`                | Required  | String   | The type of response. Can be one of the following values: `code`, `static`                                  |
+| `value`               | Required  | String   | The value of the response, either a status code or a static response.                                       |
+| `serveWithoutRequest` | Optional  | Boolean  | When enabled, response is served directly from Requestly and does not reach the backend. `false` by default |
+
+Remember that in case of the `code` type, you have special arguments that are passed to the custom function that you define. Go through the user docs for a list of arguments that you might find useful
+
+### Modify Request Rule Schema
+
+In case of this rule `ruleType` property of the rule is set to `Request`
+
+The schema of the pairs is as follows:
+
+| **Property** | **Usage** | **Type** | **Description**                                                           |
+| ------------ | --------- | -------- | ------------------------------------------------------------------------- |
+| `type`       | Required  | String   | The type of request. Can be one of the following values: `code`, `static` |
+| `value`      | Required  | String   | The value of the request, either a request code or a static request       |
+
+Remember that in case of the `code` type, you have special arguments that are passed to the custom function that you define. Go through the user docs for a list of arguments that you might find useful
+
+### Delay Rule
+
+Refer the user docs for a better understanding about Delay Rule. In case of this rule `ruleType` property of the rule is set to `Delay`
+
+| **Property**                                                                                           | **Usage** | **Type** | **Description**                |
+| ------------------------------------------------------------------------------------------------------ | --------- | -------- | ------------------------------ |
+| [`source`](https://developers.requestly.com/api/objects/rules/#block-d2ef6232185f4cceac90a931bc760b9a) | Required  | Object   | The source object for matching |
+| `delay`                                                                                                | Required  | number   | Delay value in milliseconds    |

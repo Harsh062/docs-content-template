@@ -1,0 +1,22 @@
+---
+title: Security Privacy
+label: Security & Privacy
+visibility: PUBLIC
+slug: security-privacy
+---
+
+Requestly is a completely open-source tool. So we take security and privacy concerns very seriously. Our source code is freely available for inspection on [GitHub](https://github.com/requestly/requestly). This transparency allows developers to verify the security measures implemented in the tool, providing an additional layer of trust and security
+
+### Infrastructure
+
+* **Cloud Storage:** Requestly uses Firebase as its cloud storage provider, ensuring that all data is securely stored. It employs encryption in transit through HTTPS/TLS protocols, guaranteeing the safety of your data.
+
+- **Browser Extension**: Requestly's browser extension conducts all network-level processing locally on your device. This means that no network data ever leaves your system during this process, ensuring your data's privacy and security. You can review the implementation details [**here**](https://github.com/requestly/requestly/blob/6ab8e5d6e4ddf08651e8c47833a707fe059ae188/browser-extension/mv2/src/background/background.js#L447).
+
+* **Desktop App Security**: The desktop app operates a local proxy server responsible for managing all network modifications. Similar to the browser extension, this setup ensures that no network data is transmitted outside of your system. You can examine the implementation details [**here**](https://github.com/requestly/requestly-proxy).
+
+- **Session Recording**: Requestly employs robust security measures to safeguard session replay functionality. These measures include local storage of data, strict avoidance of capturing sensitive information, and secure storage of configuration settings. Detailed information about the implementation can be found [**here**](https://www.notion.so/Architecture-8bd8372f44344216bf1be6546a2e39f7?pvs=21).
+
+### SOC 2 Compliance
+
+We are currently in the process of SOC 2 compliance. We will be happy to share further details on this upon request. You can email [security@requestly.io](mailto:security@requestly.io) to request the further details

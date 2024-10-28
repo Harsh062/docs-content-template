@@ -1,0 +1,92 @@
+---
+title: Debug HTTPs requests in iOS Simulator
+label: Debug HTTPs requests in iOS Simulator
+visibility: PUBLIC
+slug: debug-https-requests-in-ios-simulator
+---
+
+To start debugging the network traffic of your apps running inside iOS simulator, follow these steps
+
+1. Download & install [Requestly Desktop app](https://requestly.io/desktop)
+
+2. To install Requestly Root Certificate on your Mac:
+
+   1. Navigate to `Connected Apps` in the sidebar and choose target `Everywhere: System Wide`
+
+   2. Enter system password if prompted
+
+   3. Ensure that the `Install & Trust Certs` step is successful
+
+   <Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-9b8cbc7c-5d7f-4835-9567-9fe0e0350cc5-install-and-trust-cert-systemwidepng/public" align="left" />
+
+3. Note the proxy URL and port shown at the top of the App. This is where requestly is running it's proxy and where you need to redirect your traffic to from iOS emulator
+
+   <Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-58a1ed70-b9cd-48f1-8517-fa5e6d97c721-proxy-ip-port-bannerpng/public" align="left" />
+
+4. Open XCode and choose your project. In the menu click `Product > Scheme > Edit Scheme`
+
+   <Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-f88c7829-2c2f-4235-bf69-5553bd016833-xcode-edit-schemepng/public" align="left" />
+
+5. Set enivronment variables  `http_proxy`  and  `https_proxy`  to the proxy URL given by Requestly (refer step [#3](https://developers.requestly.com/guides/debugging-https-traffic-in-ios-simulator/#block-5e59f1ea2d5447839c5987f7183c6c6e))
+
+   <Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-aca07417-4361-47ee-ad78-08b56ac2d981-schema-env-proxypng/public" align="left" />
+
+6. Start the emulator `Xcode > Open Developer Tool > Simulator`
+
+   <Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-f0438da5-44bd-419b-916f-f0f590df7188-launch-simulatorpng/public" align="left" />
+
+7. To verify the proxy settings: Open Safari and navigate to `http://amiusing.requestly.io/` If it says `Success`, all good till now. Else retry from step [#2](https://developers.requestly.com/guides/debugging-https-traffic-in-ios-simulator/#block-36e104050a414bc7a7533400afebe11e)
+
+   <Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-41cd864a-089e-41d1-bc9e-864fc9e78afb-safari-amiusing-success-resizedpng/public" align="left" />
+
+8. Now you need to install Requestly's Root Certificate in the emulator
+
+   1. In Safari, navigate to `http://requestly.io/ssl` (**Use http here, not https**) and tap `Allow` to download the Requestly Root Certificate
+
+      <Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-1dbffdd7-5160-42d9-84bb-98eaf8b15368-allow-cert-dowload-safari-resizedpng/public" align="left" />
+
+   2. After downloading the certificate, navigate to `General` in `Settings` and choose `Device Management`
+
+      <Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-3444a180-8ba8-443b-944b-71ba02a8aff0-general-settings-resizedpng/public" align="left" />
+
+   3. Open `RQProxyCA` and click `Install`
+
+      <Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-6c41e7f4-c95a-4ad8-bf4e-21c064009779-install-custom-profilepng/public" align="left" />
+
+9. Since this certificate has been installed, we need to mark it as trusted. Navigate to `Settings > About > Certificate Trust Settings` and enable trust for `RQProxy CA`
+
+   <Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-d663ff25-4e2f-42bd-b440-7936d4916a6e-download-custom-profilepng/public" align="left" />
+
+10. Once the certificate has been trusted, you can now intercept traffic using Requestly and create rules to modify them as required
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-c4b53185-f4df-4f8e-8481-c11563f3685b-running-emulator-with-requestly-desktoppng/public" align="left" />
+
+You should now be able to see your rules being applied in the traffic table inside Requestly.
+
+But here are a few more tips to fully utilize requestly with the debugging tools that iOS simulator offers
+
+### **Open native Web Inspector or Developer Tool for Safari**
+
+In case you want to also see the requests in the safari devtools of your simulator:
+
+1. Launch Safari in iOS Simulator:
+
+2) Launch Safari on your mac and navigate to `Develop` in the menu bar,
+
+3. Find your Simulator device and tap the webpage you want to inspect.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-c23cdbb4-fd81-4068-8230-03fb72cfd93d-devtools-webpage-selectionpng/public" align="left" />
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-8bffba3a-fe12-43cd-96cf-e8e0c7875787-safari-devtools-network-panelpng/public" align="left" />
+
+### **Bypass CORS for Safari running in simulator**
+
+You might sometimes run into CORS issues when trying to apply rules during debugging.
+
+To disable CORS for safari inside the iOS simulator:
+
+1. Navigate to the `Develop` menu in Safari and
+
+2) Check `Disable Cross-Origin Restrictions` and `Local FIle Restrictions`
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-755535de-071f-45e9-8823-0cc8442aa63a-disable-cors-safari-resizedpng/public" align="left" />

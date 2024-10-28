@@ -1,0 +1,39 @@
+---
+title: Modify DOM/Inject scripts
+label: Modify DOM/Inject scripts
+visibility: PUBLIC
+slug: modify-dominject-scripts
+---
+
+Using Insert Scripts Rule, you can make on-the-fly changes to a webpage content. It allows you to automate, scrape & change webpages behaviour without needed to access the page source code.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-fe154016-60d2-4496-84e1-9ebcb3a64c4c-insert_script_rule_requestly_docpng/public" align="left" />
+
+ 
+
+1. **Source Condition:** Source condition is where you set criteria for the rules. You can use `URL`, `Host`, or `Path` with `Regex`, `Contains`, `Wildcard`, or `Equals` to match the source request. Learn more about source conditions [here](https://docs.requestly.io/guides/source-condition).
+
+2) **Script Language:** The specific script language (JS/CSS) that needs to be inserted.
+
+3. **Script Source:** Source Code or URL of the script that needs to be inserted.
+
+4) **Script Load Time:** When is the script loaded in the webpage. (Before Page Load/After Page Load).
+
+5. **Define Custom Attributes**: Enables you to add pre-defined(defer, async etc.) or custom attributes to script tag on insert.
+
+### Popular Use Cases
+
+* Inject popular libraries or hosted scripts or execute custom code-snippet before or after page load using a simple rule builder.
+
+- Test & demonstrate SaaS applications like website widgets and monitoring scripts on target websites.
+
+### FAQs
+
+1. Is there a way to inject the script only in the main document and not in the iframe?
+
+   Yes, [advanced filter targeting](https://docs.requestly.com/general/http-rules-\(modify-traffic\)/advanced-usage/advance-targeting#:~:text=Matches%20\(Wildcard\).-,Resource%20Type%20Targeting,-Here%2C%20you%20can) can be used to select the resource type.\
+   You can inject the script in only the main document or only in the iframe.
+
+   <Image src="https://cdn.hashnode.com/res/hashnode/image/upload/v1724173922072/6d15b199-6dea-4c8b-ae89-4fd42b37b544.png" align="center" />
+
+<Image src="https://i.ytimg.com/vi/b3TzuxkNdgM/hqdefault.jpg" align="left" />

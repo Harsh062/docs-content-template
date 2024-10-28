@@ -1,0 +1,42 @@
+---
+title: Rules not working
+label: Rules not working
+visibility: PUBLIC
+slug: rules-not-working
+---
+
+This explains how to troubleshoot if the rules are not working even if the Requestly extension is installed in the browser.
+
+### **Check if permissions are given to the extension**
+
+1. Visit "chrome://extensions” URL
+
+2) Click on the Details button of the Requestly extension
+
+3. Under “Site access”, choose “On all sites”
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-d3628395-26a1-4b9b-8d16-ed17da1fd321-site-accesspng/public" align="left" />
+
+### **Check if extension is enabled in Settings**
+
+1. Visit "chrome://extensions”
+
+2) Check if the extension is enabled or not.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-f5a78a1f-c814-4de5-a542-4e7d63f819fb-extension-enablepng/public" align="left" />
+
+### **Check if Extension is activated**
+
+It might be possible that you might have deactivated the extension by mistake. To activate the extension, follow the steps [here](https://developers.requestly.com/http-rules/pause-resume-requestly/)
+
+### **Check if status of Group under which rule is present is active**
+
+Groups allow you to organize rules into logical groups and enable/disable them in one go.
+
+For a Rule to work, it’s group must be active.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-48825932-caa7-43de-8639-f4be4c1c6135-sample-grouppng/public" align="left" />
+
+### Only XHR/Fetch Requests works from extension
+
+If you are trying to hit the request directly in the browser and using Requestly Extension only. Please note only XHR/Fetch requests can be modified by the browser extension. For other type of requests, use [Desktop App](https://requestly.io/desktop).

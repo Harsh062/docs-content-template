@@ -1,0 +1,107 @@
+---
+title: Modify Request Body
+label: Modify Request Body
+visibility: PUBLIC
+slug: modify-request-body
+---
+
+Modifying the request payload is the process of changing the data sent to the server when making an HTTP request. You can use Modify Request Body rule to override the API request body with static data or programmatically modify the existing request payload.
+
+#### Static Request Body Modification
+
+In this mode, you can enter a static request body (JSON) you want to forward to the server.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-c4f0a1bb-7de2-4466-9e23-7f0699c24133-ss-2_54png/public" align="left" />
+
+**Rule working but doesn't show updated request body in devtools**
+
+Request Body Modifications will not show up in the browser network devtools due to technical constraints. So your rule might actually be working but only doesn't show the updated Request body in the browser devtools.
+
+1. **Source Condition**: Source condition is where you set criteria for the rules. You can use `URL`, `Host`, or `Path` with `Regex`, `Contains`, `Wildcard`, or `Equals` to match the source request. Learn more about source conditions [here](https://docs.requestly.io/guides/source-condition).
+
+2) **Static Request Body**: Define the static request body which must be passed to the server.
+
+3. **Source Filters**: You can define better targeting conditions and restrict rules to apply on specific web pages (or domains), request types, request methods, or request payloads. Learn more about source filters [here](https://docs.requestly.io/desktop-app/mac/features/advance-targeting).
+
+#### Programmatic Request Body Modification
+
+The existing request body can be modified programmatically using JavaScript.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-2fc44d0b-26c0-4ec7-9207-f518f330a986-ss-2_55png/public" align="left" />
+
+> Programmatic Modification Script (JS) is where you write a JavaScript script that can modify the existing request body programmatically.
+
+#### Arguments of `modifyRequestBody`
+
+1. `method` (string)- The [HTTP method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) of the request. `GET | POST | PUT | DELETE etc.`
+
+2) `url` (string) - The request URL.
+
+3. `body` (string)- The original request body stringified:
+
+```bash
+'{"app":"requestly","feature":"modify-request"}'
+```
+
+1. `bodyAsJson` (JSON object)- The original request body parsed into JSON object:
+
+```bash
+{
+    "app":"requestly",
+    "feature":"modify-request"
+}
+```
+
+#### `Return` type of `modifyRequestBody`
+
+You can `return` modified body as `string` or `JSON` object.
+
+#### How to modify the body of a POST request.
+
+We use `https://echo.hoppscotch.io/` to test this which echoes back the request.
+
+* We make the following `POST` request.
+
+```bash
+const options = {
+  method: 'POST',
+  headers: {'content-type': 'application/json'},
+  body: '{"app":"requestly"}'
+};
+
+fetch('https://echo.hoppscotch.io/', options)
+  .then(response => response.json())
+  .then(response => console.log(response))
+  .catch(err => console.error(err));
+```
+
+* Create a `Modify Request Body` rule uses the following JavaScript. You can find the rule [here](https://app.requestly.io/rules#sharedList/1677676857339-modify-request-payload).
+
+```bash
+function modifyRequestBody(args) {
+  const { method, url, body, bodyAsJson } = args;
+  // Change request body below depending upon request attributes received in args
+  let newBody;
+  if (method === "POST") {
+    newBody = bodyAsJson;
+    newBody["feature"] = "modify request";
+  }
+  return newBody;
+}
+```
+
+* You can see the key `feature` being added to the request body when `hoppscotch` echoes back the request.
+
+#### Popular Use Cases:
+
+* **Primarily used in sending additional data in request payload to the API server:** There might be situations where additional data needs to be sent in request payloads to the API server when making a POST or PUT request.
+
+- **Modifying GraphQL Queries:** GraphQL queries can be modified by modifying the request body of the request. This can be done by changing the query string or variables in the request body.
+
+* **Testing different edge cases:** You may modify an API request payload to include an invalid or unsupported field. The server will likely reject the API request and return an error message.
+
+### FAQs
+
+<Accordion title="Request rule not working">
+  Request Body Modifications will not show up in the browser network devtools due to technical constraints. So your rule might actually be working but only doesn't show the updated Request body in the browser devtools.
+</Accordion>

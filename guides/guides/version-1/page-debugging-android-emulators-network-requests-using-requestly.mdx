@@ -1,0 +1,141 @@
+---
+title: Debugging Android Emulators Network Requests using Requestly
+label: Debugging Android Emulators Network Requests using Requestly
+visibility: PUBLIC
+slug: debugging-android-emulators-network-requests-using-requestly
+description: >-
+  Debug and modify Android emulator network requests with Requestly. Features
+  include real-time inspection, URL redirects, and header adjustments. Perfect
+  for developers.
+---
+
+# What is it?
+
+Just like your desktop web browser has a Network Devtool panel that lets you have granular control over your Network requests. Requestly offers a similar debugging experience for Android Emulators.
+
+The `Android Emulator Network Debugger` in Requestly, you can simulate different network conditions, tweak requests on the fly, and share the results easily—essentially providing a powerful extension to your development toolkit.
+
+* [Redirect URLs](https://docs.requestly.com/general/rule-types/redirect-rule)
+
+* [Modify Request/Response Headers](https://docs.requestly.com/general/rule-types/modify-headers)
+
+* [Modify Response (Status Code & Body)](https://docs.requestly.com/general/http-rules--rule-types/modify-response-body)
+
+* [Modify Request Body](https://docs.requestly.com/general/rule-types/modify-request-body)
+
+* [Delay Requests](https://docs.requestly.com/general/rule-types/delay-request)
+
+# Why Requestly?
+
+* All parts of network requests can be intercepted and modified using Requestly.
+
+* One Click Setup
+
+* Save and Share Network Sessions with others
+
+# Demo
+
+<Embed src="https://www.youtube.com/watch?v=37R0qOw6mrY" />
+
+.
+
+# How to Setup?
+
+<Callout type="info">
+  For more manual setup guide and troubleshooting, follow the steps [here](https://docs.requestly.com/desktop-app/android/android-emulators)
+</Callout>
+
+## **0. Prerequisites**
+
+1. Download the [**Requestly Desktop app**](https://requestly.com/desktop)**,** if you haven’t already.
+
+2) Start your Android App on the emulator.
+
+## **1. Setup Proxy & Certificates**
+
+> **Works only with Requestly Desktop App **`>v1.7.0`
+
+1. Click `Connect Apps`
+
+2) Go to `Mobile Apps & Browsers` tab.
+
+3. Click on `Connect` button of emulator you want to connect to.
+
+## **2. \[if-required] SSL Pinning**
+
+<Callout type="info">
+  Only required on Android API level >= 23 (Android 7+).
+</Callout>
+
+<Callout type="alert">
+  Make sure to remove these in production builds
+</Callout>
+
+Add these configs to your app codebase for it to work
+
+1. Add **res/xml/network\_security\_config.xml**
+
+```xml
+<network-security-config>
+  <debug-overrides>
+    <trust-anchors>
+      <certificates src="user" />
+      <certificates src="system" />
+    </trust-anchors>
+  </debug-overrides>
+
+  <base-config cleartextTrafficPermitted="true">
+    <trust-anchors>
+      <certificates src="system" />
+      <certificates src="user" />
+    </trust-anchors>
+  </base-config>
+</network-security-config>
+```
+
+2. Add to **AndroidManifest.xml**
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest ... >
+    <application android:networkSecurityConfig="@xml/network_security_config" ... >
+    ...
+    </application>
+</manifest>
+```
+
+## **3. Deactivate Proxy (After done debugging)**
+
+<Callout type="alert">
+  Please make sure to revert the proxy after you are done debugging the emulator
+</Callout>
+
+<Image src="https://cdn.hashnode.com/res/hashnode/image/upload/v1721759425881/75a111b5-5255-49ba-ba25-9c9a8ce2e774.gif" align="center" />
+
+**OR**
+
+Run this command in Android Studio Terminal
+
+```xml
+adb shell settings put global http_proxy :0
+```
+
+# What's Next?
+
+* Inspect the requests which are fired from your app.
+
+* Try different types of Modifications which Requestly Network Debugger can perform.
+
+  * [Redirect URLs](https://docs.requestly.com/general/rule-types/redirect-rule)
+
+  * [Modify Request/Response Headers](https://docs.requestly.com/general/rule-types/modify-headers)
+
+  * [Modify Response (Status Code & Body)](https://docs.requestly.com/general/http-rules--rule-types/modify-response-body)
+
+  * [Modify Request Body](https://docs.requestly.com/general/rule-types/modify-request-body)
+
+  * [Delay Requests](https://docs.requestly.com/general/rule-types/delay-request)
+
+* [Share your Network Session](https://docs.requestly.com/desktop-app/others/import-export-network-sessions) with your teammates
+
+* [Create a Mock/File Server](https://docs.requestly.com/general/mock-server--overview)

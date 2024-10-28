@@ -1,0 +1,64 @@
+---
+title: Browsers
+label: Browsers
+visibility: PUBLIC
+slug: browsers
+---
+
+To start intercepting and modifying network traffic from a browser using Requestly, you need to connect the browser first. Follow the steps to connect browser of your choice.
+
+## Steps
+
+1. Click any one of the `Connect Apps` button as shown below.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-f4fed1f3-e435-441c-ac06-620cc8b6ae34-ss-2_10png/public" align="left" />
+
+2. This will open a popup modal which consists all detected browsers on your system, along with other sources that Requestly supports. Select the browser that you want to launch. 
+
+   <Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-98898cbf-b993-47c3-924d-dd51e713ecce-ss-2_11png/public" align="left" />
+
+## Supported Browsers
+
+<AccordionGroup>
+  <Accordion title="Google Chrome (New Profile)">
+    Launches a fresh Google Chrome instance intercepted by Requestly
+  </Accordion>
+
+  <Accordion title="Google Chrome (Existing Profile)">
+    Intercepts requests from existing chrome profile
+
+    > All running instances will be closed first. Make sure to save any progress of the browser instance
+  </Accordion>
+
+  <Accordion title="Chrome Beta" />
+
+  <Accordion title="Chrome Canary" />
+
+  <Accordion title="Firefox" />
+
+  <Accordion title="Arc" />
+
+  <Accordion title="Safari">
+    Launches a new Safari instance with Requestly intercepting
+
+    > When you launch safari from Requestly, it sets a system wide proxy due to technical constraints. Make sure to turn it off after done debugging
+  </Accordion>
+
+  <Accordion title="Edge" />
+</AccordionGroup>
+
+## Launching with custom arguments
+
+Use the options next to browser launch button to launch with custom arguments
+
+<Image src="https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F8e04dd23-74cd-4c44-8158-4238eac359d1%2F1c2f215e-6998-4ba1-9415-fcde621cf166%2FlaunchWithCustomArgs.gif?table=block&id=231c62b3-9058-46d8-995f-be2310ed31cf&cache=v2" align="left" />
+
+**Preset Configurations**
+
+* `Without Safety Checks`: This sets the following flags:
+
+  `--allow-running-insecure-content --allow-insecure-localhost --allow-third-party-modules`
+
+- `Without CORS`: This launches the browser with `--disable-web-securtiy` flag set
+
+- `With Custom Arguments`: This allows you to specify your own custom launch arguments. Currently this is only supported for chromium based browsers. You can find a comprehensive list of arguments [here](https://peter.sh/experiments/chromium-command-line-switches/)

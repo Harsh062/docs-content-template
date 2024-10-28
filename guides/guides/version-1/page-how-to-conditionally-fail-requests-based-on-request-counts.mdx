@@ -1,0 +1,35 @@
+---
+title: How to conditionally fail requests based on request counts
+label: How to conditionally fail requests based on request counts
+visibility: PUBLIC
+slug: how-to-conditionally-fail-requests-based-on-request-counts
+---
+
+Mock an API response to fail on the first try and succeed on the second attempt. This can be easily done using shared state.
+
+> Note: `$sharedState` is only available in extension version > `24.8.13` and desktop app > `v1.7.1`
+
+### Steps to conditionally fail requests are:
+
+1. Create a new [modify response rule](https://docs.requestly.com/general/http-rules-\(modify-traffic\)/http-rules--rule-types/modify-response-body)
+
+2. Select dynamic javascript modification
+
+3. Write javascript code to conditionally fail requests based on request counts
+
+   ```javascript
+   function modifyResponse(args) {
+     const {method, url, response, responseType, requestHeaders, requestData, responseJSON} = args;
+     // Change response below depending upon request attributes received in args
+     let count=$sharedState.count ?? 0;
+     ++count;
+     $sharedState.count=count;
+
+     // Succeed if it is not the first request
+     if($sharedState.count>0){
+       return response;
+     } else {
+       return null;
+     }
+   }
+   ```

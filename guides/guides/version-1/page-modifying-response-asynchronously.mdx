@@ -1,0 +1,77 @@
+---
+title: Modifying response asynchronously
+label: Modifying response asynchronously
+visibility: PUBLIC
+slug: modifying-response-asynchronously
+---
+
+Before going into Async Modifications, lets learn about Requestly Response Rule a little bit.
+
+[Requestly Response Rule](https://developers.requestly.com/http-rules/modify-response-body/) comes in handy when you have to modify the response of a Request. You can either modify the response using `Static Data` or `Programmatically` write a script to modify the response.
+
+## **Programmatic Response Rule**
+
+Modifying Response body using Programmatic mode is really powerful. You can modify the response body programmatically based on incoming request's headers, status code, request method etc.
+
+For example, this rule changes the response body to `{"foo": "bar"}` when request method is `GET` and return original response for rest of the methods.
+
+```bash
+function modifyResponse(args) {
+  const {method, url, response, responseType, requestHeaders, requestData, responseJSON} = args;
+  // Change response below depending upon request attributes received in args
+  
+  if(method === "GET") {
+    return {"foo": "bar"}
+  }
+
+  return response;
+}
+```
+
+## **Async Modifications**
+
+Async modifications lets you perform some long running tasks before returning the response. You can learn about async await from [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function). This can be helpful in the following scenarios:
+
+### **Usecases**
+
+* [Changing response based on response from some other URL](https://developers.requestly.com/guides/async-response-modification/#block-0da2a5daea2b462792cdad3899bf8099).
+
+- [Respond to the request with the response from another website](https://developers.requestly.com/guides/async-response-modification/#block-add97b322e7340499f2766bb9ff41345).
+
+* Adding delays in Response (This is also possible using [Requestly Delay Rule](https://developers.requestly.com/http-rules/delay-request/))
+
+#### **Example 1**
+
+In this example, we'll try to hit an external URL to fetch the auth\_token and then add the token in the original response.
+
+> Rule: [https://app.requestly.io/rules#sharedList/1677765397812-Async-Modification-Response-Rule](https://app.requestly.io/rules#sharedList/1677765397812-Async-Modification-Response-Rule)
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-99f24b00-cef0-4858-b03a-389d25b754aa-async-response-modificationpng/public" align="left" />
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-6114a5c1-1b42-4b20-9c91-59bf0ed59f8c-async-response-modification-original-responsepng/public" align="left" />
+
+Original Response
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-a97e5a86-2f57-42ca-9749-492cb52185f4-async-response-modification-updated-responsepng/public" align="left" />
+
+Updated Response with token
+
+1. Fetching Token from URL `https://demo_requestly.requestly.dev/auth_token`.
+
+2) Adding token in Response.
+
+#### Example 2
+
+This example changes the response of a non-existent domain ([https://non-existent-url.com](https://non-existent-url.com/)) by fetching the response from another url ([https://demo\_requestly.requestly.dev/users/1](https://demo_requestly.requestly.dev/users/1))
+
+> Rule: [https://app.requestly.io/rules#sharedList/1677766334864-Async-Modification-Changing-response-of-non-existent-domain-programmatically](https://app.requestly.io/rules#sharedList/1677766334864-Async-Modification-Changing-response-of-non-existent-domain-programmatically)
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-e065e186-6f02-46b4-ab87-9c550dff28d3-async-response-modification-2png/public" align="left" />
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-6b08e2a6-44b8-4d07-9644-a1799cf10330-async-response-modification-2-original-responsepng/public" align="left" />
+
+Original Response
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-6ef9c932-0db8-40d4-aae3-d0b4b0496d6a-async-response-modification-2-updated-responsepng/public" align="left" />
+
+Updated Response

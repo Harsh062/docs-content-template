@@ -1,0 +1,82 @@
+---
+title: Shared State
+label: Shared State
+visibility: PUBLIC
+slug: untitled-page
+---
+
+<Callout type="info">
+  This is only available in extension version > `24.8.13` and desktop app > `1.7.1`
+</Callout>
+
+`$sharedState` allows you to store and retrieve data within and across [Modify Request](https://docs.requestly.com/general/http-rules-\(modify-traffic\)/rule-types/modify-request-body) and [Modify Response](https://docs.requestly.com/general/http-rules-\(modify-traffic\)/http-rules--rule-types/modify-response-body) rules. It is a javascript Object where you can assign key-value pairs from different requests and use it in your rules.
+
+## Use cases
+
+1. Conditional request/response modification based on some conditions stored in previous requests. Please read [here](https://docs.requestly.com/guides/how-to-conditionally-fail-requests-based-on-request-counts) about how you can conditionally fail requests based on the requests counts.
+
+2. Aggregate data from multiple requests to be used in a rule.
+
+3. Manage tokens or values across different API requests.
+
+## How to use?
+
+1. Create a new [modify response rule](https://docs.requestly.com/general/http-rules-\(modify-traffic\)/http-rules--rule-types/modify-response-body) or [modify request rule](https://docs.requestly.com/general/http-rules-\(modify-traffic\)/rule-types/modify-request-body)
+
+2. Select dynamic javascript modification
+
+3. You can use the `$sharedState` variable to manage and share state
+
+   1. Using `$sharedState` to store data
+
+      ```javascript
+      function modifyResponse(args) {
+        const {method, url, response, responseType, requestHeaders, requestData, responseJSON} = args;
+        
+        // Stores all Request URLs and their response
+        const URLMap=$sharedState.urlMap;
+        URLMap[url]=response;
+        $sharedState.urlMap=urlMap;
+        
+        return response;
+      }
+      ```
+
+   2. Using `$sharedState` to dynamically modify the response
+
+      ```javascript
+      function modifyResponse(args) {
+        const {method, url, response, responseType, requestHeaders, requestData, responseJSON} = args;
+        
+        // Checks if requestURL: https://api.ex.com/postData was fired 
+        // then fail all the subsequent requests
+        if("https://api.ex.com/postData" in $sharedState.urlMap){
+      	  return null;
+        }
+        
+        return response;
+      }
+      ```
+
+## FAQs
+
+1. How do I access the sharedState?\
+   You can use the following code in the dynamic javascript editor:
+
+   ```javascript
+   // To set a value in the sharedState
+   $sharedState.myVariable = "some value";
+
+   // To retrieve a value from the sharedState
+   let myValue = $sharedState.myVariable;
+   ```
+
+2. What data can I store in the sharedState?\
+   The sharedState can store any kind of data that can be serialized to JSON, including strings, numbers, booleans, objects, and arrays.
+
+3. How long does the data in the sharedState persist?\
+   `$sharedState` has different runtime context in the Requestly desktop app and Requestly browser extension.
+
+   1. **Desktop App**: It persists until the desktop app is closed.
+
+   2. **Browser Extension**: It runs in the context of a browser tab. It persists until the tab is closed.

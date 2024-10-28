@@ -1,0 +1,167 @@
+---
+title: Android Emulators
+label: Android Emulators
+visibility: PUBLIC
+slug: android-emulators
+---
+
+<Embed src="https://www.youtube.com/watch?v=37R0qOw6mrY" />
+
+.
+
+# Setup
+
+## 0. Prerequisites
+
+1. Download the [Requestly Desktop app,]() if you haven’t already.
+
+2) Start your Android App on the emulator.
+
+## 1. Setup Proxy & Certificates
+
+<Tabs>
+  <TabItem title="Automatic Setup">
+    > Works only with Requestly Desktop App `>v1.7.0`
+
+    1. Click `Connect Apps`
+
+    2) Go to `Mobile Apps & Browsers` tab.
+
+    3. Click on `Connect` button of emulator you want to connect to.
+
+    <Image src="https://www.notion.so/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F8e04dd23-74cd-4c44-8158-4238eac359d1%2F1fafc9e8-2017-4ec1-8b8c-7104e334d1c1%2FUntitled.gif?table=block&id=34c40acc-231f-401d-97df-9cb73228f318&cache=v2" align="left" />
+
+    > Not seeing your emulator? Follow these [steps](https://docs.requestly.com/desktop-app/android/android-emulators#emulator-not-detected).
+  </TabItem>
+
+  <TabItem title="Manual Setup">
+    ### Setup Emulator Proxy
+
+    1. Launch Emulator
+
+    2) Setup Proxy by entering this in Android Studio terminal
+
+    ```bash
+     adb shell settings put global http_proxy "<ip>:<port>"
+    ```
+
+    > Make sure to change the `<ip>:<port>` in the above command to the one mentioned in the header of Requestly desktop app
+
+    ### **Setup CA Certificate (Only Required one time)**
+
+    #### Automatic Script
+
+    Paste this in your Android Studio Terminal
+
+    ```bash
+    #!/bin/bash
+    subjectHash=`openssl x509 -inform PEM -subject_hash_old -in ~/Library/Application\ Support/Requestly/.tmp/certs/ca.pem | head -n 1`
+    openssl x509 -in ~/Library/Application\ Support/Requestly/.tmp/certs/ca.pem -inform PEM -outform DER -out $subjectHash.0
+    adb root
+    adb push ./$subjectHash.0 /data/misc/user/0/cacerts-added/$subjectHash.0
+    adb shell "su 0 chmod 644 /data/misc/user/0/cacerts-added/$subjectHash.0"
+    adb reboot
+    ```
+
+    #### Manual Process
+
+    1. **Download certificate**
+
+       1. Open Incognito window in your browser
+
+       2. Go to [http://requestly.io/ssl](http://requestly.io/ssl) (⚠️ **Use http here, not https)**
+
+       3. This will download `RQProxyCA.pem.cert`
+
+    2) **Trust Certificate**
+
+       1. Open Trusted Certificate Settings by navigating to `Settings -> Security -> Encryption & Credentials -> Install a Certificate -> CA Certificate`.
+
+       2. To install this certificate, select `Install Anyway` and select the certificate `RQProxyCA.pem.cert`.
+
+       3. To verify Certificate trust settings are now active, go to `Trusted Credentials -> User`. `RQProxyCA` should be present here. Alternately, you may simply begin submitting requests and watch as they are logged in the Requestly Network Tab.
+
+    <Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-30401f9d-05a4-40ff-9d4d-16752a47ae33-untitledpng/public" align="center" />
+  </TabItem>
+</Tabs>
+
+## 2. \[if-required] SSL Pinning
+
+<Callout type="info">
+  Only required on Android API level >= 23 (Android 7+).
+</Callout>
+
+<Callout type="alert">
+  Make sure to remove these in production builds
+</Callout>
+
+Add these configs to your app codebase for it to work
+
+1. Add **res/xml/network\_security\_config.xml**
+
+```xml
+<network-security-config>
+  <debug-overrides>
+    <trust-anchors>
+      <certificates src="user" />
+      <certificates src="system" />
+    </trust-anchors>
+  </debug-overrides>
+
+  <base-config cleartextTrafficPermitted="true">
+    <trust-anchors>
+      <certificates src="system" />
+      <certificates src="user" />
+    </trust-anchors>
+  </base-config>
+</network-security-config>
+```
+
+2. Add to **AndroidManifest.xml**
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest ... >
+    <application android:networkSecurityConfig="@xml/network_security_config" ... >
+    ...
+    </application>
+</manifest>
+```
+
+## 3. Deactivate Proxy (After done debugging)
+
+Please make sure to revert the proxy after you are done testing using Requestly
+
+```bash
+ adb shell settings put global http_proxy :0
+```
+
+# Troubleshooting
+
+### Emulator not detected?
+
+* Check if your emulator is running?
+
+* Check if `adb` is installed. If not, install it from [here](https://developer.android.com/tools/releases/platform-tools)
+
+* Try Restarting your emulator.
+
+# How does it work?
+
+Here's the code that makes this happen in a single click
+
+[https://github.com/requestly/requestly-desktop-app/blob/fb1f321a3d2431cfcd9d95d1396bcd39820a4ec9/src/renderer/actions/apps/mobile/android.js#L63-L74](https://github.com/requestly/requestly-desktop-app/blob/fb1f321a3d2431cfcd9d95d1396bcd39820a4ec9/src/renderer/actions/apps/mobile/android.js#L63-L74)
+
+1. Searches for online ADB devices
+
+2. On `Connect`
+
+   1. Root the device (To install Requestly CA)
+
+   2. Inject Requestly CA (if not already)
+
+   3. Setup Proxy on Emulator
+
+   4. Restart the Emulator (Only first time)
+
+3. On `Disconnect` - Removes the Proxy

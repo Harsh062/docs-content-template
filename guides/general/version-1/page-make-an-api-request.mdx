@@ -1,0 +1,132 @@
+---
+title: Make an API request
+label: Make an API request
+visibility: PUBLIC
+slug: make-an-api-request
+---
+
+To hit an API endpoint and see the response, you need to specify the URL and other request attributes like method, query parameters, body and headers.
+
+### Prequisites
+
+* You need to either use the Requestly Desktop application or install the Requestly extension in the browser to use the API client. ([Get installation link](https://requestly.io/downloads))
+
+### Steps
+
+1. Click **API Client** link in the left sidebar of the Requestly application.
+
+2) Select the request method from dropdown. *GET* should be selected by default.
+
+3. Enter the URL in the input box next to request method dropdown.
+
+4) Enter the fields like query parameters, body and headers under the URL.
+
+5. Click **Send** button next to URL.
+
+In the section below the API request fields, you would find all the details of the received response.
+
+### Page structure
+
+Let's try to understand each part of the API Client editor.
+
+1. On left hand side, we see a history of all API requests triggered so far.
+
+2) On right hand side, we have two sections. The top section is for Request attributes and the bottom section is for Response attributes.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-dacf3100-4688-4251-9b55-1033433f0215-ss-2_21png/public" align="left" />
+
+### Request section
+
+In the Request section, you may select the HTTP method, enter the URL, enter query parameters, define body and specify headers to send in the request.
+
+#### Select method and enter URL
+
+Select the appropriate HTTP method for the request from the dropdown and enter the URL.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-2b1b3c82-7b5f-4c55-9c2d-5c837268c9d2-ss-2_22png/public" align="left" />
+
+#### Enter query parameters
+
+In the **Query Params** tab, you may enter query parameters to send in the request as key-value pairs.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-03460b16-8e83-4c98-91e3-c9e79946d09b-ss-2_23png/public" align="left" />
+
+These query parameters will be appended to the entered URL to obtain the final URL used to trigger the request.
+
+For example, if the endpoint URL is [https://example.com/api](https://example.com/api) and query parameters are:
+
+* uid = 123
+
+- env = stage
+
+The final request URL will be: [https://example.com/api?uid=123\&env=stage](https://example.com/api?uid=123\&env=stage)
+
+#### Define request body
+
+You may define a request body if the HTTP method is selected as anything other than *GET* or *HEAD*.
+
+In the **Body** tab, you may select one of the 3 options to specify the content type - Raw, JSON or Form.
+
+#### Enter Raw body
+
+Select **Raw** option, if you want to send the request body as plain text. Enter the content in the text box.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-8444946a-5b1e-4ed1-9318-57ee76ae0dbb-ss-2_24png/public" align="left" />
+
+A header **content-type = text/plain** will automatically be added in the request. However, you may edit it in **Headers** tab.
+
+#### Enter JSON body
+
+Select **JSON** option, if you want to send a JSON in the request body. Enter the JSON content in the text box.
+
+You may also click **Beautify** button on the right to format the entered JSON.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-s3-us-west-2amazonawscom-securenotion-staticcom-0ba9d191-9493-467f-8bf7-0ef03805e4db-untitledwebp/public" align="left" />
+
+A header **content-type = application/json** will automatically be added in the request. However, you may edit it in **Headers** tab.
+
+#### Enter Form data
+
+Select **Form** option, if you want to send form data in the request body. Enter the form data as key-value pairs.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-f9b92215-c46b-4f60-9c58-af68cdb2fa51-ss-2_25png/public" align="left" />
+
+A header **content-type = application/x-www-form-urlencoded** will automatically be added in the request. However, you may edit it in **Headers** tab.
+
+#### Enter request headers
+
+In the **Headers** tab, you may enter the headers to send in the request as key-value pairs.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-3b4e7d5b-9a1c-4272-93b2-d446b2713c57-ss-2_26png/public" align="left" />
+
+### Response section
+
+In the Response section, you may find details like response body, response headers, status code, response time, and the redirected URL.
+
+#### View response body
+
+The first tab in the Response section shows the response body.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-212db7ac-f29b-4352-9ff5-8393ebc7260a-ss-2_27png/public" align="left" />
+
+By default, it shows the preview of the response body, but you may also view the raw form of the response body by clicking **Raw** switch button in **Response body** tab.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-e71d9f9f-b037-4d91-a814-91b65739e157-ss-2_28png/public" align="left" />
+
+The preview is supported only for response types - text, JSON, HTML and image.
+
+#### View response headers
+
+Switch to **Headers** tab in the Response section to view all the response headers.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-261e3a0f-5c5e-4432-ad7a-f0e142f92416-ss-2_29png/public" align="left" />
+
+#### View response status, time and other information
+
+On the right hand side of the Response section, information like status code, response time and the redirected URL are displayed.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-7249e00c-8e32-4032-9642-b1d841e07ed3-ss-2_30png/public" align="left" />
+
+***
+
+> NOTE The API client currently works in the cookie-less mode, i.e., no cookie is sent in the request or set by the response.

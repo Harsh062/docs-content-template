@@ -1,0 +1,24 @@
+---
+title: Modify Query Params
+label: Modify Query Params
+visibility: PUBLIC
+slug: modify-query-params
+---
+
+Using Requestly, you can modify the query params that are send to the server. You `Add` a new query param, `change` the value of the existing param or `remove` all/specific query param from the URL.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-528c8350-e8d9-40fc-bd03-a2d249ef86a2-ss-2_51png/public" align="left" />
+
+1. **Source Condition:** Source condition is where you set criteria for the rules. You can use `URL`, `Host` or `Path` with `Regex`, `Contains`, `Wildcard` or `Equals` to match the source request. Learn more about source conditions [here](https://docs.requestly.io/guides/source-condition).
+
+2) **Param Modification:** You can perform query param modification here. You can `Add`, `Remove`, `Override` the query params of the matched URL.
+
+3. **Source Filters:** You can define better targeting conditions and restrict rules to be applied on specific webpages (or domains), request types, request methods, or request payload. Learn more about source filters [here](https://docs.requestly.io/desktop-app/mac/features/advance-targeting).
+
+#### Popular Use Cases
+
+* Remove UTM tracking parameters.
+
+- Using query params, you can burst cache for a request by assigning it a newer version.
+
+* Sending additional Information to some API calls to inform your backend & database that this is internal testing.

@@ -1,0 +1,263 @@
+---
+title: Rules API
+label: Rules API
+visibility: PUBLIC
+slug: rules-api
+---
+
+To authenticate with the API, use the custom header `x-api-key` with your provided API key.
+
+Example:
+
+```bash
+curl -H "x-api-key: YOUR_API_KEY" https://api2.requestly.io/v1/rules
+```
+
+<Callout type="tip">
+  Requestly API is currently in `BETA`. Fill this [form](https://app.formbricks.com/s/clryn62s316gjdeho9j03t7oa) to get your API key today.
+</Callout>
+
+## Endpoints
+
+The current APIs give all the basic crud capabilities for rules. In case you want to quickly try these out on this playground [https://requestly.readme.io/](https://requestly.readme.io/)
+
+### Get rules
+
+You have the option to either get all the rules or get a certain
+
+#### Get all rules
+
+To retrieve all the rules, use the following endpoint.
+
+**Endpoint**: `GET /rules`
+
+**CURL Example**:
+
+```bash
+curl -H "x-api-key: YOUR_API_KEY" https://api2.requestly.io/v1/rules
+```
+
+**Sample Response**:
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "Redirect_fohh4",
+      "name": "Sample Redirect Rule",
+      "description": "This rule redirects example.com to newexample.com",
+      "status": "Active",
+      "ruleType": "Redirect",
+      "pairs": [
+        {
+          "source": {
+            "key": "Url",
+            "operator": "Equals",
+            "value": "<https://example.com>"
+          },
+          "destinationType": "url",
+          "destination": "<https://newexample.com>"
+        }
+      ]
+    },
+    // ... other rules
+  ],
+  "total": 56,
+  "nextOffset": 31,
+}
+```
+
+This endpoint supports pagination. If the `nextOffset` in the response is `null` there are no more records to fetch.
+
+You can specify which page of results to fetch by using the following query parameters in your request:
+
+* `offset` : The index from where the results should start. Usually you will set this to the value you receive inside the `nextOffset`
+
+* `pageSize` : Number of results you want to GET. By default this is set to `30` and can take a maximum value of `75` right now.
+
+#### Get a particular rule
+
+To retrieve a specific rule, use the rule's unique ID.
+
+**Endpoint**: `GET /rules/:ruleId`
+
+**CURL Example**:
+
+```bash
+curl -H "x-api-key: YOUR_API_KEY" https://api2.requestly.io/v1/rules/Redirect_fohh4
+```
+
+**Sample Response**:
+
+```json
+{
+  "success": true,
+  "data": {
+    "id": "Redirect_fohh4",
+    "name": "Sample Redirect Rule",
+    "description": "This rule redirects example.com to newexample.com",
+    "status": "Active",
+    "ruleType": "Redirect",
+    "pairs": [
+      {
+        "source": {
+          "key": "Url",
+          "operator": "Equals",
+          "value": "<https://example.com>"
+        },
+        "destinationType": "url",
+        "destination": "<https://newexample.com>"
+      }
+    ]
+  }
+}
+```
+
+### Create Rule
+
+To create a new rule, send a POST request with the rule details.
+
+**Endpoint**: `POST /rules`
+
+**CURL Example**:
+
+```bash
+curl -X POST -H "x-api-key: YOUR_API_KEY" -H "Content-Type: application/json" -d '{
+  "name": "Cancel Rule for Blocked Site",
+  "description": "This rule blocks access to blockedsite.com",
+  "status": "Active",
+  "ruleType": "Cancel",
+  "pairs": [
+    {
+      "source": {
+        "key": "Url",
+        "operator": "Equals",
+        "value": "https://blockedsite.com"
+      }
+    }
+  ]
+}' https://api2.requestly.io/v1/rules
+```
+
+**Sample Response**:
+
+```json
+{
+  "success": true,
+  "data": {
+    "id": "Cancel_a1b2c",
+    "name": "Cancel Rule for Blocked Site",
+    "description": "This rule blocks access to spammy.com",
+    "status": "Active",
+    "ruleType": "Cancel",
+    "pairs": [
+      {
+        "source": {
+          "key": "Url",
+          "operator": "Equals",
+          "value": "https://spammy.com"
+        }
+      }
+    ]
+  }
+}
+```
+
+### Update Rule
+
+To update an existing rule, send a PUT request with the updated rule details.
+
+**Endpoint**: `PUT /rules/:ruleId`
+
+**CURL Example**:
+
+```bash
+curl -X PUT -H "x-api-key: YOUR_API_KEY" -H "Content-Type: application/json" -d '{
+  "name": "Replace Rule for Typo",
+  "description": "This rule replaces typodomain.com with correctdomain.com",
+  "status": "Active",
+  "ruleType": "Replace",
+  "pairs": [
+    {
+      "source": {
+        "key": "Url",
+        "operator": "Equals",
+        "value": "https://typodomain.com"
+      },
+      "from": "typodomain.com",
+      "to": "correctdomain.com"
+    }
+  ]
+}' https://api2.requestly.io/v1/rules/Replace_z5x6y
+```
+
+**Sample Response**:
+
+```json
+{
+  "success": true,
+  "data": {
+    "id": "Replace_z5x6y",
+    "name": "Replace Rule for Typo",
+    "description": "This rule replaces typodomain.com with correctdomain.com",
+    "status": "Active",
+    "ruleType": "Replace",
+    "pairs": [
+      {
+        "source": {
+          "key": "Url",
+          "operator": "Equals",
+          "value": "https://typodomain.com"
+        },
+        "from": "typodomain.com",
+        "to": "correctdomain.com"
+      }
+    ]
+  }
+}
+```
+
+### Delete Rule
+
+To delete a rule, send a DELETE request specifying the rule's unique ID.
+
+**Endpoint**: `DELETE /rules/:ruleId`
+
+**CURL Example**:
+
+```bash
+curl -X DELETE -H "x-api-key: YOUR_API_KEY" https://api2.requestly.io/v1/rules/Headers_w3e4r
+```
+
+**Sample Response**:
+
+```json
+{
+  "success": true,
+  "message": "Rule successfully deleted."
+}
+```
+
+## **Possible Errors**
+
+* **Rule not found**: The specified rule does not exist.
+
+- **Unauthorized action**: You do not have access to the specified rule.
+
+* **Group not found**: The specified group does not exist.
+
+- **Rule pairs are invalid**: The provided rule pairs do not match the expected schema.
+
+* **Rule Payload is invalid**: The entire rule payload is invalid.
+
+- **Rule Type update not allowed**: Attempted to change the rule type after creation.
+
+Each error will return a response in the format:
+
+```json
+{
+  "success": false,
+  "message": "Error message here."
+}
+```

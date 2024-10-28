@@ -1,0 +1,94 @@
+---
+title: GraphQL - Modify Request & Response
+label: GraphQL - Modify Request & Response
+visibility: PUBLIC
+slug: graphql-modify-request-response
+---
+
+This page explains how you can alter GraphQL API requests and responses using Requestly.
+
+### Modifying GraphQL responses
+
+In GraphQL, there is typically just one HTTP endpoint for all client interactions. And to specify which operation to execute, it is a common practice to pass `operationName` in the request payload.
+
+For example,
+
+```bash
+POST /graphql
+{
+  "operationName": "getUsers",
+  "query": `
+    query getUsers {
+      users {
+        id
+        email
+      }
+    }
+  `
+}
+```
+
+To modify response of a GraphQL request, you may create a [Modify API Response](https://developers.requestly.com/http-rules/modify-response-body/) rule and target `operationName` field in the request payload.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-c80e39c0-a7e5-4871-bb50-ee3b0b789825-ss-2_6png/public" align="left" />
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-56753bf9-80f3-43da-b983-79ea70a4c433-ss-2_5png/public" align="left" />
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-13c40853-5076-40cc-bada-02fb33b7c12a-ss-2_7png/public" align="left" />
+
+Select Resource Type as `GraphQL API` and in `GraphQL Operation (Request Payload Filter)`, enter:
+
+* Key as `operationName`
+
+- value as `getUsers`
+
+💡
+
+Note: `Key` is the JSON key in the request payload. It also supports nested path. For instance, if operation name is available at path `data.operationName` instead of root, Key can be specified as `data.operationName`. Incase request body starts with an array like `[{ "operationName": "value", ...}]` , Key can be specified as `0.operationName` .
+
+ 
+
+If your GraphQL request does not specify `operationName`, you should select Resource Type as `REST API` and use `Dynamic (JavaScript)` mode to filter the request and override the response.
+
+For example, in the below GraphQL request, there is no `operationName` field. The operation `getUsers` is instead specified in `query` field.
+
+```bash
+POST /graphql
+{
+  "query": `
+    query getUsers {
+      users {
+        id
+        email
+      }
+    }
+  `
+}
+```
+
+The JavaScript code would look like:
+
+```bash
+function modifyResponse(args) {
+  const {url, response, requestData, responseJSON} = args;
+
+  if (requestData.query?.includes("query getUsers")) {
+    // return custom response from this query
+    console.log("Requestly: Modifying response", { query: requestData.query });
+    return {...responseJSON, custom: true};
+  }
+
+  // return original response
+  return response;
+}
+```
+
+ 
+
+### Modifying GraphQL requests
+
+If you have a use-case to modify the GraphQL query or variables, you may create a [Modify Request Body](https://developers.requestly.com/http-rules/modify-request-body/) rule where the request body can be altered.
+
+ 
+
+ 

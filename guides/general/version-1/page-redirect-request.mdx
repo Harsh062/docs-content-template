@@ -1,0 +1,65 @@
+---
+title: Redirect Request
+label: Redirect Request
+visibility: PUBLIC
+slug: redirect-rule
+---
+
+Redirect Rule helps in changing the HTTP Requests location to a new destination as per the configured rule, so that the response is transparently served from the new location as if that was the original request.
+
+### Configuring Rule
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-1f2cc8d4-1b73-4331-b8e0-75659c150531-ss-2_46png/public" align="left" />
+
+1. **Source Condition**: Source condition is where you set criteria for which requests will match the. You can use `URL`, `Host` or `Path` with `Regex`, `Contains`, `Wildcard` or `Equals` to match the source request. Learn more about source conditions [here](https://docs.requestly.io/guides/source-condition).
+
+2) **Destination URL**: The destination to which the users will be redirected to based on the source condition.
+
+3. **Source Filters**: You can define advanced targeting conditions and restrict rules to be applied on specific request types, request methods, or request payload. Learn more about source filters [here](https://docs.requestly.io/desktop-app/mac/features/advance-targeting).
+
+### Demo
+
+<Embed src="https://youtu.be/lOt1kGKTq-w" />
+
+### Testing Rule
+
+* To test if the rule is properly configured or not, use the `Test this Rule` feature in the bottom of the Rule Editor. This can help you verify if the source conditions are matching to the URL you want to test or not.
+
+  * <Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-504db315-9fe7-4422-afe3-fa5045547e7d-ss-2_47png/public" align="left" />
+  * <Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-5b11cfd4-ce1f-4c4a-a315-0360131ee634-ss-2_48png/public" align="left" />
+
+### Popular use cases
+
+* **Redirect Production to Local Environment:** Map your production scripts or APIs to your local running code and test your local code directly on production sites without deployment. [Here's](https://requestly.io/blog/how-to-load-local-js-files-on-live-production-sites) an article with more explanation.
+
+- **Redirect to local System files (Map Local):** With Map Local feature, you can directly replace the production scripts with the local files. Any change in the local files will be instantly reflected on production. You can find more details [here](https://docs.requestly.io/desktop-app/mac/features/map-local).
+
+* **Test API version changes:** Suppose there is a new version of some API which you are using. To test the backward compatibility of the API, you can just set up a redirect rule to redirect all URLs from the older version to the newer version and check if your application behaves as expected. This way, you don't need to change a single line of your code and test the API upgrades.
+
+- **Fix Broken URLs, Redirect dead bookmarks, and Create URL shortcuts:** You can setup a redirect rule to fix some broken URLs, redirect the dead bookmarks to new working bookmarks and create URL shortcuts.
+
+* **Swap Tag Manager scripts from production to staging/dev environment:** Test your dev implementation in tag manager scripts like Adobe DTM, Tealium Tag, Google Tag Manager Containers before pushing them live on client websites. Learn more [here](https://requestly.io/blog/how-to-load-local-script-in-production-in-adobe-launch/).
+
+### Examples
+
+* [Redirect Google queries to Duckduckgo](https://app.requestly.io/rules#sharedList/1679464393107-Google-to-DuckDuckGo)
+
+- [Load Google Analytics in Debug Mode](https://app.requestly.io/rules/shared-lists/viewer/1643984301107-Load-Google-Analytics-in-Debug-Mode?template=true)
+
+* [Change the Default Dictionary in Adobe Acrobat Reader to Merriam-Webster](https://app.requestly.io/rules#sharedList/1679464587448-Change-the-Default-Dictionary-in-Adobe-Acrobat-Reader-to-Merriam-Webster)
+
+### FAQs
+
+<AccordionGroup>
+  <Accordion title="Check if Rule is executed or not">
+    Use [this](https://developers.requestly.com/guides/know-if-rule-executed-on-page/) guide to check if the rule executed or not.
+  </Accordion>
+
+  <Accordion title="Can I redirect https URL to http">
+    Yes, Redirect Rule supports redirecting from https to http and vice-versa.
+  </Accordion>
+
+  <Accordion title="Can it redirect to a local file?">
+    Right now this is not possible in Browser Extension. But you can use our desktop app to redirect to a local file (Map Local).
+  </Accordion>
+</AccordionGroup>

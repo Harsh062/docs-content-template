@@ -1,0 +1,72 @@
+---
+title: Know if a rule executed on the web page
+label: Know if a rule executed on the web page
+visibility: PUBLIC
+slug: know-if-a-rule-executed-on-the-web-page
+---
+
+Once you have enabled a Requestly rule to modify some part of a network request or the page, next thing you would like to do is to confirm if the rule executed successfully.
+
+Here are multiple ways to know if a rule executed on a page.
+
+### Extension icon turns green
+
+If any of the rules executes on the current page, the Requestly icon in the extension toolbar (next to the address bar) will turn from a normal icon to a green icon.
+
+### Executed rules tab in popup
+
+1. Open the extension popup by clicking on the Requestly icon in the extension toolbar.
+
+2) Switch to *Executed rules* tab.
+
+All the rules which executed in the current page will be listed in this tab.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-fd005bd2-8e2c-4b2e-9844-8ff0c39fb237-know-if-rule-executed-on-page-popup-executed-rulespng/public" align="left" />
+
+### Logs in browser console
+
+Whenever a rule is applied, Requestly can print a log in browser console mentioning:
+
+* details of the intercepted network request
+
+- name of rule which was applied
+
+To enable, toggle ON the setting **Enable console logs** from [https://app.requestly.io/settings](https://app.requestly.io/settings).
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-157bdd98-dade-4248-b87e-38345831260d-know-if-rule-executed-on-page-console-log-settingpng/public" align="left" />
+
+To open browser console logs:
+
+1. Right-click on the page and select *Inspect*.
+
+2) Switch to *Console* tab.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-0499bff3-297a-4524-8fa3-76d43694f96c-know-if-rule-executed-on-page-console-logpng/public" align="left" />
+
+### Requestly devtool
+
+1. Right-click on the page and select *Inspect*.
+
+2) Switch to *Requestly* tab.
+
+3. Reload the page.
+
+It should list all intercepted network requested which were modified by Requestly, alongwith the link to rule and the summary of modification.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-c1038ea8-e0a4-4556-ae9d-9ec69e3c23be-know-if-rule-executed-on-page-devtoolpng/public" align="left" />
+
+> ***Note***\*: Unless the page is reloaded with the devtool opened, it cannot capture the network requests. This is a browser limitation.\*
+
+### Rule execution logs
+
+You may also check the execution logs for a rule individually.
+
+1. Go to [Requestly app](https://app.requestly.io/rules/) and open the rule.
+
+2) In the footer, click **Execution Logs** tab.
+
+It should list all the network requests modified by this rule.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-519de269-f74a-4c2e-95e9-36ff9c756921-know-if-rule-executed-on-page-rule-executionpng/public" align="left" />
+
+> ***Note***\*: You need to click on Refresh button each time to see the updated results.\*

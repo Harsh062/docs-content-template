@@ -1,0 +1,77 @@
+---
+title: Map Local
+label: Map Local
+visibility: PUBLIC
+slug: map-local
+---
+
+Map Local feature lets you to serve any local file as the response of an intercepted request in Realtime. You can make changes in the file locally and test them live without updating them on the server. when a request is made to a URL that matches a defined rule, Requestly intercepts the request and serves the specified local file as the response to the client, just as if it was the normal remote response. Making it ideal for testing different scenarios.
+
+### How to use?
+
+<Callout type="info">
+  **This feature is only available in Desktop App.**
+
+  [Download](https://requestly.io/desktop)
+</Callout>
+
+You can use the [Redirect rule](https://docs.requestly.io/desktop-app/mac/http-modifications/redirect-rule) to map a request to a local file. This redirects the request to the local file, causing it to be served in response to that request.
+
+<Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-0f0949ab-683a-446e-a1e9-7182b15f2596-ss-2_58png/public" align="left" />
+
+### Popular Use Cases
+
+* Testing Offline or Unavailable Resources: Map Local allows users to serve local HTML, CSS, JavaScript, or other static files as responses to requests for online resources. This can be useful when testing a web application offline or when certain resources are temporarily unavailable.
+
+- Test local changes directly on production sites. This saves a lot of effort from deploying code to staging/production environment. Using Requestly, you can load CSS, images, JavaScript, assets etc. in staging/production (or live) sites to test your local changes faster.
+
+### Example
+
+In this example we'll create a [rule](https://app.requestly.io/rules/shared-lists/viewer/1681478607948-Map-local-demo), by utilizing Requestly's map local feature, we'll try to hit an external API endpoint which will intercept and redierct this request to the local file which we will be served as a respone to the client instead of what was intended from the production server.
+
+Consider this as the content of local file :
+
+```bash
+{
+  "success": {
+    "status": "success",
+    "data": {
+      "name": "John Doe",
+      "age": 30,
+      "email": "john.doe@example.com"
+    }
+  },
+  "error": {
+    "status": "error",
+    "message": "Failed to retrieve data"
+  },
+  "timeout": {
+    "status": "timeout",
+    "message": "Request timed out"
+  }
+}
+```
+
+* Create a redirect rule and change the destination type to `Local file`
+
+- Add the source condition (the request URL which matches the source condition) and choose the local file to which you want to redirect to.
+
+  * <Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-9c63a618-8aa4-4002-a063-e55e7964f5c2-ss-2_59png/public" align="left" />
+
+* Now the request to source URL we added will be intercepted and redirect to the local file we chose.
+
+  * <Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-cddf89dc-fae5-4d59-b5ff-a31961d75809-ss-2_60png/public" align="left" />
+
+> Note The local file to which you want to redirect the request to, must be present in your local machine.
+
+### FAQs
+
+<AccordionGroup>
+  <Accordion title="Will this rule work in accordion?">
+    Due to technical constraints, this rule does not work in extension. But you can use the [Desktop app](https://requestly.io/desktop)[ to map loc](https://requestly.io/desktop)al files in redirect rule.
+  </Accordion>
+
+  <Accordion title="Do I need to change rule after changing the contents of local file?">
+    Requestly intercepts the request and serves the specified local file as the response to the client. This process happens in **real-time**, meaning that any changes made to the local file are immediately reflected in the responses served by Requestly, without needing to change the rule again.
+  </Accordion>
+</AccordionGroup>

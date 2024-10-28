@@ -1,0 +1,142 @@
+---
+title: Modify Response Body
+label: Modify Response Body
+visibility: PUBLIC
+slug: modify-response-body
+---
+
+The Modify Response Rule allows you to mock the response body of an HTTP request.
+
+ 
+
+<Image src="https://i.ytimg.com/vi/KIPbxUGUYq8/hqdefault.jpg" align="left" />
+
+#### Popular use cases
+
+* You want to work on front-end while back-end is not available or ready yet.
+
+- You want to test application behaviour when provided altered data.
+
+* You want to simulate errors by returning different status codes.
+
+- You want to modify API responses but don't have access to the back-end.
+
+### Options
+
+1. **Select Resource Type**
+
+   1. <Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-3b7c702f-e7e3-404c-9173-e811e691a406-ss-2_63png/public" align="left" />
+
+   2. **REST API**: To modify **XHR/Fetch** requests from web pages.
+
+   3. **GraphQL**: To Target & Modify GraphQL APIs using operations.
+
+   4. **HTML/JS/CSS(Desktop app only)** - To work with HTML/JS/CSS files.
+
+2) **Source Condition**: If the request URL matches this *source condition*, then only the rule is applied. You can use `URL`, `Host`, or `Path` with `Regex`, `Contains`, `Wildcard` or `Equals` to match the source request. Learn more about source conditions [here](https://docs.requestly.io/guides/source-condition).
+
+3. **Source Filters**: This helps you define better targeting conditions and restrict rules to be applied on specific webpages (or domains), request types, request methods, or request payloads. Learn more about source filters [here](https://docs.requestly.io/desktop-app/mac/features/advance-targeting).
+
+4) **GraphQL Operation**(only in the case of GraphQL) - Enables matching the operation you want to target in case of GraphQL APIs.
+
+5. **Response Status Code**: Update the Response status code. (2XX, 3XX, 4XX, 5XX ...). If left empty, the original status code is returned.
+
+6) **Response Body**
+
+   1. **Static Response Modification - **In this mode, you can enter the response body that you want as the response.
+
+      1. <Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-ed01ddcd-a8d7-4bcc-9db6-0048c9f2c9c9-ss-2_64png/public" align="left" />
+
+   2. **Programmatic Modification Script (JS)** - Write a JavaScript script that can modify the existing response programmatically. The following arguments are available to create a response programmatically:
+
+      1. <Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-0908b0e4-f9ff-46f0-9eac-f8e2ef64349d-ss-2_65png/public" align="left" />
+
+      2. **method** (string)- [HTTP Method](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) of the request like - `GET`, `POST`, `PUT`, `DELETE`, `PATCH`
+
+      3. **URL** (string)- Complete the URL of the request including query parameters.
+
+      4. **response** (string) - Original response body as a string.
+
+      5. **responseType** (string) - The [content type](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) of the original response.
+
+      6. **requestHeaders** (Object) - The [request headers](https://developer.mozilla.org/en-US/docs/Glossary/Request_header) are sent to the server.
+
+      7. **requestData** (string) - The HTTP request payload in case of `POST`, `PUT` & `PATCH` requests.
+
+      8. **responseJSON **(JSON object)- The original response body as a JSON Object.
+
+      9. ✏️
+
+      10. **Response Returned **(JSON or String) - A new response can be generated in string or JSON format, Requestly can handle both responses.
+
+   3. **Local File(Desktop App Only)** - In case you have your response in a file, browse the file and its content will be returned.
+
+7. **Test this rule** - This box will appear only after you save the rule, it accepts a URL and opens it in a new tab for you to test. It comes with an option to capture screen, console & network details, if enabled Requestly will capture these details in SessionBook for debugging later.
+
+### Targeting GraphQL requests
+
+You can target GraphQL requests using the operation name in request body. To do so add:
+
+* Payload JSON Key, e.g., `operationName`
+
+- Value, e.g., `getUsers`
+
+  * <Image src="https://imagedelivery.net/IEMzXmjRvW0g933AN5ejrA/wwwnotionso-image-prod-files-secures3us-west-2amazonawscom-8e04dd23-74cd-4c44-8158-4238eac359d1-d217283d-0130-4d01-9eca-ab70d8d8ee4f-ss-2_66png/public" align="left" />
+
+To learn more about this checkout [GraphQL Support](https://docs.requestly.io/desktop-app/mac/features/graphql-support).
+
+### Guides
+
+* [Modifying Response asynchronously](https://docs.requestly.io/guides/async-response-modification): Async modifications lets you perform some long running tasks before returning the response
+
+- [Modifying Non Existent Domain](https://docs.requestly.io/guides/modifying-non-existent-domain-response): Helpful for frontend developers when the backend isn't ready yet.
+
+ 
+
+### FAQs
+
+What happens if I leave the status code field empty
+
+Where would console.log show up?
+
+[« Map Remote](https://developers.requestly.com/http-rules/map-remote/)[Modify DOM/Inject scripts »](https://developers.requestly.com/http-rules/modify-dom-inject-scripts/)
+
+ 
+
+[Modify Response Body](https://developers.requestly.com/http-rules/modify-response-body/#87a239c4421541d2b08a282332eaae37)[Popular use cases](https://developers.requestly.com/http-rules/modify-response-body/#2db218612af04ed99e09786fc5e0e795)[Options](https://developers.requestly.com/http-rules/modify-response-body/#cb136dbb7e784796a3956be5179d4003)[Targeting GraphQL requests](https://developers.requestly.com/http-rules/modify-response-body/#34dd7c222a224046a60d95d8ed360c7b)[**Guides**](https://developers.requestly.com/http-rules/modify-response-body/#0fd6cee7d121499086d067219d685f06)[FAQs](https://developers.requestly.com/http-rules/modify-response-body/#c365b4f393964e7992ef659da6e28098)
+
+ 
+
+ 
+
+<Image src="https://firebasestorage.googleapis.com/v0/b/digital-axon-366208.appspot.com/o/sites%2FEMIrh7PRQO3KZHahgBTP%2Flogo%2FLogo-svg.svg?alt=media&token=7e8c7dca-b4d8-413d-9426-089c84ba958f" align="left" />
+
+Setup redirects, modify headers, switch hosts, insert user scripts and much more. Install Requestly on Chrome & Firefox and join our family of more than **200,000** developers!
+
+[Twitter](https://twitter.com/requestlyio?lang=en)[LinkedIn](https://www.linkedin.com/company/requestly/)[Facebook](https://www.facebook.com/requestly/)
+
+##### **PRODUCTS**
+
+[API Client](https://developers.requestly.com/api-client/overview/)
+
+[HTTP Rules](https://developers.requestly.com/http-rules/overview/)
+
+[Mock Server](https://developers.requestly.com/mock-server/overview/)
+
+[Session Recording](https://developers.requestly.com/sessions/overview/)
+
+##### **COMMUNITY**
+
+[Slack](https://requestlycommunity.slack.com/join/shared_invite/zt-113lursq9-2TI4bXLhkdNPEpTUJBprIA#/shared-invite/email)
+
+[Stack Overflow](https://stackoverflow.com/questions/tagged/requestly)
+
+[Discord](https://discord.com/invite/SumMHwuaZv)
+
+##### **MORE**
+
+[Blogs](https://requestly.io/blog?_gl=1*b2rhc1*_ga*MTYwNjE3MjMwOS4xNjg5Njc5ODc5*_ga_7FZEBFLWK0*MTY5MTA1MTk2NS40MC4xLjE2OTEwNTIyNjMuNTcuMC4w)
+
+[Github](https://github.com/requestly)
+
+Copyright © 2023 RQ Labs, Inc. All rights reserved
